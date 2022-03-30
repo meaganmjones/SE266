@@ -1,3 +1,8 @@
+<h1>This page displays numbers 0 - 100</h1>
+<h2>If the number is a multiple of 2 you'll see the word 'fizz'</h2>
+<h2>If the number is a multiple of 3 you'll see the word 'buzz'</h2>
+<h2>If the number is a multiple of 2 and 3 you'll see the word 'fizzbuzz'</h2>
+
 <?php
 
 
@@ -19,12 +24,12 @@ function fizzBuzz($num){
     //}
 
 }
+?>
 
-
+<?php
 //for loop that will call fizzbuzz function
 for ($random = 0; $random <= 100; $random++){
-    $numbers = ['number' => random];
-    echo $numbers;
+    echo '//'.$random.'//';
     fizzBuzz($random);
-
 }
+?>
