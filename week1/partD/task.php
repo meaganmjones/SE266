@@ -10,9 +10,9 @@
 
     <?php 
         $tasks = [
-            'title' => 'Grocery Shop'
-            'due' => 'Wednesday'
-            'assignedTo' => 'Rebecca'
+            'title' => 'Grocery Shop',
+            'due' => 'Wednesday',
+            'assignedTo' => 'Rebecca',
             'completed' => 'No'
         ];
 
@@ -20,7 +20,7 @@
 
     <ul>
         <?php foreach ($tasks as $desc => $info) : ?>
-            <li><strong><?= $desc ?></strong><?= $info; ?></li>
+            <li><strong><?= $desc ?></strong>  <?= $info; ?></li>
             <?php endforeach ?>
     </ul>
 
