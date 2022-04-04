@@ -40,7 +40,7 @@
 
 <footer>
 
-    <?php include __DIR__ . '/../include/footer.php'; ?>
+    <?php include __DIR__ . 'http://localhost/se266/se266-1/week2/partA/main_coursepg.php/include/footer.php'; ?>
 
 </footer>
 </body>
