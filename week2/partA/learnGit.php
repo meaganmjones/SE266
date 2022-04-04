@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="bootstrap.css"/>
     <title>Learn Git</title>
 </head>
-<body>
 <ul class="nav">
   <li class="nav-item">
     <a class="nav-link" href="main_coursepg.php">Home</a>
@@ -19,10 +18,12 @@
     <a class="nav-link" href="learnGit.php">Learn Git</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Meagan's Hobbies</a>
+    <a class="nav-link" href="hobbies.php">Meagan's Hobbies</a>
   </li>
 
 </ul>
+
+
 <h2>Learn GitHub: </h2>
         <li><a href="https://lab.github.com/githubtraining/introduction-to-github">Github Training</a></li>
         <li><a href="https://www.youtube.com/watch?v=nhNq2kIvi9s">YouTube Tutorial</a></li>

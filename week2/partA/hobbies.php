@@ -19,7 +19,7 @@
     <a class="nav-link" href="learnGit.php">Learn Git</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Meagan's Hobbies</a>
+    <a class="nav-link" href="hobbies.php">Meagan's Hobbies</a>
   </li>
 
 </ul>
