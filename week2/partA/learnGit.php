@@ -27,5 +27,17 @@
         <li><a href="https://lab.github.com/githubtraining/introduction-to-github">Github Training</a></li>
         <li><a href="https://www.youtube.com/watch?v=nhNq2kIvi9s">YouTube Tutorial</a></li>
         <li><a href="https://www.codecademy.com/learn/learn-git">Code Acedemy</a></li>
+
+
+<footer class="modal-footer">
+
+<?php       
+        $file = basename($_SERVER['PHP_SELF']);
+        $mod_date=date("F d Y h:i:s A", filemtime($file));
+        echo "File last updated $mod_date ";
+        //date.timezone = "Europe/Athens"
+    ?>
+
+</footer>
 </body>
 </html>

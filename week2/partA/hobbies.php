@@ -28,5 +28,17 @@
         <li><a href="https://www.nxlpaintball.com/">Paintball</a></li>
         <li><a href="https://www.corsair.com/us/en/build-your-gaming-pc?gclid=CjwKCAjwrqqSBhBbEiwAlQeqGj-jhO1ZX_XxjpnVJOyq0l2j0qICpCfKDQs7yaSHnR2Fpvg4kH__hRoCs9IQAvD_BwE">PC Building</a></li>
         <li><a href="#">Nothing</a></li>
+
+
+<footer class="modal-footer">
+
+<?php       
+        $file = basename($_SERVER['PHP_SELF']);
+        $mod_date=date("F d Y h:i:s A", filemtime($file));
+        echo "File last updated $mod_date ";
+        //date.timezone = "Europe/Athens"
+    ?>
+
+</footer>
 </body>
 </html>

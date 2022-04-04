@@ -38,9 +38,14 @@
         <li>Week 9</li>
         <li>Week 10</li>
 
-<footer>
+<footer class="modal-footer">
 
-    <?php include __DIR__ . 'http://localhost/se266/se266-1/week2/partA/main_coursepg.php/include/footer.php'; ?>
+<?php       
+        $file = basename($_SERVER['PHP_SELF']);
+        $mod_date=date("F d Y h:i:s A", filemtime($file));
+        echo "File last updated $mod_date ";
+        //date.timezone = "Europe/Athens"
+    ?>
 
 </footer>
 </body>
