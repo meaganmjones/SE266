@@ -9,6 +9,30 @@
 <body>
     <h1>ADD THE NAV PLS</h1>
 
+
+    <?php
+        //validate name fields for a string
+        function isValidName($name){
+            $valid = false;
+            if(is_string($name) == 1){
+                $valid = true;
+            }else{
+                $valid = false;
+            }
+            return $valid;
+        }
+
+        //This is backwards compared to the example
+        //Not sure how to fix!
+        if (isset($_POST['submit_btn'])){
+            echo 'Form Submitted';
+            var_dump ($_POST);
+        }else{
+            echo 'Inital load of form';
+        }
+    ?>
+
+<!--Patient Intake Form-->
     <h1>Patient Intake</h1>
     <form name="patient_form" method="post" action="intake_form.php">
 
@@ -39,6 +63,11 @@
                 <label>Weight:</label>
                 <input type="text" name="weight" value="" />
             </div>
+            <div>
+                <input type="submit" name="submit_btn" value="submit" />
+            </div>
+
+
 
 
 </body>
