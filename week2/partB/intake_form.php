@@ -19,16 +19,31 @@
             }else{
                 $valid = false;
             }
-            return $valid;
+            return ($valid);
         }
 
-        //This is backwards compared to the example
-        //Not sure how to fix!
+        //use height and weight to calculate BMI
+        function calc_BMI($feet, $inch, $weight){
+            $meter = ($feet * 12 + $inch) * 0.0254;
+            return ($meter);
+        }
+
+        $firstName = "";
+        $lastName = "";
+
         if (isset($_POST['submit_btn'])){
-            echo 'Form Submitted';
-            var_dump ($_POST);
+            $firstName = filter_input(INPUT_POST, "fName");
+            $lastName = filter_input(INPUT_POST, 'lName');
+
+            if ($firstName == "" or $lastName == ""){
+                echo "ERROR: first/last name required";
+            }else{
+                echo "$firstName" . " " . "$lastName";
+            }
+           // echo 'Form Submitted';
+            //var_dump ($_POST);
         }else{
-            echo 'Inital load of form';
+            //echo "$firstName";
         }
     ?>
 
