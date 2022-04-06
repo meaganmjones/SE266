@@ -4,12 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.css" />
     <title>Healthy Living Intake</title>
 </head>
 <body>
-    <h1>ADD THE NAV PLS</h1>
+<!--NAV BAR -->    
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link" href="main_coursepg.php">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/meaganmjones/SE266">GitHub Repo</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="learnGit.php">Learn Git</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="hobbies.php">Meagan's Hobbies</a>
+  </li>
 
+</ul>
 
+<h1>Patient Intake</h1>
+
+<!--START OF PHP JUNK -->
     <?php
         //validate name fields for a string
         // function isValidName($name){
@@ -45,22 +63,8 @@
         }
 
         function isValidDate($dob){
-             try{
-                 $date = new DateTime($dob);
-                 $valid = true;
-             } catch(Exception $err){
-                 $valid = false;
-             }
-             return ($valid);
-
-            // $date_now = new DateTime();
-            // $date = new DateTime($dob);
-
-            // if($date_now > $date){
-            //     return false;
-            // }else{
-            //     return true;
-            // }
+            $date = explode('-', $dob);
+            return checkdate($date[1], $date[2], $date[0]);
         }
 
         function age($dob){
@@ -71,17 +75,19 @@
         }
 
         function display($first, $last, $status, $age, $bmi){
-            echo "Name: " . "$first" . " " . "$last" . "\n";
-            echo "Age: " . "$age" . "\n";
-            echo "$status" . "\n";
-            echo "BMI: " . "$bmi" . "\n";
+            echo "Name: " . "$first" . " " . "$last" . ", ";
+            echo "Age: " . "$age" . ", ";
+            echo "$status" . ", ";
+
+            $round_BMI = round($bmi, 1);
+            echo "BMI: " . "$round_BMI" . ", ";
 
             $group = bmi_sort($bmi);
 
             echo "(" . "$group" . ")";
         }
 
-//*************END OF FUNCTION FACTORY ***************** */
+//************* END OF FUNCTION FACTORY ***************** */
 
 //############# START OF FORM VALIDATION / PRINTING ############
         //initialize variables
@@ -131,13 +137,13 @@
                 //echo "$dob". " /";
             }
 
-            //if date of birth not valid:
-            if (isValidDate($dob) == false){
-                //display error
-                echo "ERROR: Enter valid date of birth /";
+            //if date of birth IS valid:
+            if (isValidDate($dob)){
+                //display nothing right now
+                //echo "ERROR: Enter valid date of birth /";
             }else{
-                //otherwise print the date
-                //echo "##";
+                //otherwise display error
+                echo "ERROR: Invalid date of birth";
             }
 
             //if they're suspiciously short/tall:
@@ -167,12 +173,13 @@
            // echo 'Form Submitted';
             //var_dump ($_POST);
         }else{
-            echo "initial load of form";
+            echo "Welcome";
         }
     ?>
+<!--END OF PHP JUNK-->
 
 <!--Patient Intake Form-->
-    <h1>Patient Intake</h1>
+    
     <form name="patient_form" method="post" action="intake_form.php">
 
         <div class="container">
