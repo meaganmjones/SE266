@@ -71,6 +71,7 @@
               
                     
                     <div class="accountInner">
+                        <h3>Checking</h3>
                         <input type="text" name="checkingWithdrawAmount" value="" />
                         <input type="submit" name="withdrawChecking" value="Withdraw" />
                     </div>
@@ -85,6 +86,7 @@
                
                     
                     <div class="accountInner">
+                    <h3>Savings</h3>
                         <input type="text" name="savingsWithdrawAmount" value="" />
                         <input type="submit" name="withdrawSavings" value="Withdraw" />
                     </div>

@@ -16,12 +16,16 @@
         
         public function __construct ($id, $bal, $startDt) 
         {
-           // write code here
+           $this->accountId = $id;
+           $this->balance = $bal;
+           $this->startDate = $startDt;
         } // end constructor
         
         public function deposit ($amount) 
         {
-            // write code here
+            $this->balance = $balance + $amount;
+            return $this->balance;
+
         } // end deposit
 
         abstract public function withdrawal($amount);
@@ -31,7 +35,7 @@
         
         public function getStartDate() 
         {
-            // write code here
+            
         } // end getStartDate
 
         public function getBalance() 

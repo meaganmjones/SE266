@@ -29,7 +29,7 @@
     <h2>PHP Assignments</h2>
         <li>Week 1 - <a href="https://jonesse-266.herokuapp.com/week1/partG/fizzbuzz.php">FizzBuzz</a></li>
         <li>Week 2 - <a href="https://jonesse-266.herokuapp.com/week2/partB/intake_form.php">Intake Form</a></li>
-        <li>Week 3</li>
+        <li>Week 3 - <a href="https://jonesse-266.herokuapp.com/week3/atm_starter.php">ATM</a></li>
         <li>Week 4</li>
         <li>Week 5</li>
         <li>Week 6</li>
