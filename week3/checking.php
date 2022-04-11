@@ -1,14 +1,33 @@
 <?php
  
- 	include ("./account.php");
+ 	require ("./account.php");
+    require ("./atm_starter.php");
  
     class CheckingAccount extends Account 
     {
         const OVERDRAW_LIMIT = -200;
+        protected $checking_ID;
+        protected $checking_bal;
+        protected $date;
+
+        public function __construct ($id, $bal, $dt) 
+        {
+           $this->checking_ID = $id;
+           $this->checking_bal = $bal;
+           $this->date = $startDt;
+
+           parent::__construct($id,$bal,$dt);
+        } // end constructor
+
 
         public function withdrawal($amount) 
         {
-            // write code here. Return true if withdrawal goes through; false otherwise
+
+            if($amount <= $checking_bal){
+                return True;
+            }else{
+                return False;
+            }
         } // end withdrawal
 
         //freebie. I am giving you this code.
@@ -21,6 +40,7 @@
         }
     }
 
+    //************************************************************* */
 
 // The code below runs everytime this class loads and 
 // should be commented out after testing.

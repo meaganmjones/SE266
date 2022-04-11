@@ -2,7 +2,7 @@
 <?php
     if (isset ($_POST['withdrawChecking'])) 
     {
-        echo "I pressed the checking withdrawal button";
+        echo new CheckingAccount('C123', 1000, '12-20-2019');
     } 
     else if (isset ($_POST['depositChecking'])) 
     {
