@@ -1,18 +1,35 @@
 <?php
 
-include ("./account.php");
+include "account.php";
  
     class SavingsAccount extends Account 
     {
+        protected $saving_ID;
+        protected $saving_bal;
+        protected $date;
+        public function __construct ($id, $bal, $dt) 
+        {
+           $this->saving_ID = $id;
+           $this->saving_bal = $bal;
+           $this->date = $startDt;
 
+           parent::__construct($id,$bal,$dt);
+        } // end constructor
         public function withdrawal($amount) 
         {
-            // write code here. Return true if withdrawal goes through; false otherwise
+            if ($amount <= $saving_bal){
+                return True;
+            }else{
+                return False;
+            }
         } //end withdrawal
 
         public function getAccountDetails() 
         {
-           // look at how it's defined in other class. You should be able to figure this out ...
+            $accountDetails = "<h2>Savings Account</h2>";
+            $accountDetails = parent::getAccountDetails();
+            
+            return $accountDetails;
         } //end getAccountDetails
         
     } // end Savings

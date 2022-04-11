@@ -1,8 +1,13 @@
 
 <?php
+include "checking.php";
+include "savings.php";
+   // include "atm_starter.php";
+   ini_set('memory_limit', '1024M');
     if (isset ($_POST['withdrawChecking'])) 
     {
-        echo new CheckingAccount('C123', 1000, '12-20-2019');
+        $checking = new CheckingAccount ('C123', 1000, '12-20-2019');
+        echo $checking;
     } 
     else if (isset ($_POST['depositChecking'])) 
     {
