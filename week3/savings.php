@@ -1,6 +1,6 @@
 <?php
 
-include "account.php";
+include_once "account.php";
  
     class SavingsAccount extends Account 
     {
@@ -11,7 +11,7 @@ include "account.php";
         {
            $this->saving_ID = $id;
            $this->saving_bal = $bal;
-           $this->date = $startDt;
+           $this->date = $dt;
 
            parent::__construct($id,$bal,$dt);
         } // end constructor

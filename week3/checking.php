@@ -1,8 +1,8 @@
 <?php
  
- 	include "account.php";
+ 	include_once "account.php";
    // include "atm_starter.php";
-    ini_set('memory_limit', '1024M');
+    //ini_set('memory_limit', '1024M');
     class CheckingAccount extends Account 
     {
         const OVERDRAW_LIMIT = -200;
@@ -14,7 +14,7 @@
         {
            $this->checking_ID = $id;
            $this->checking_bal = $bal;
-           $this->date = $startDt;
+           $this->date = $dt;
 
            parent::__construct($id,$bal,$dt);
         } // end constructor
@@ -23,7 +23,7 @@
         public function withdrawal($amount) 
         {
 
-            if($amount <= ($checking_bal - 200)){
+            if($amount <= ($this->checking_bal - 200)){
                 return True;
             }else{
                 return False;

@@ -25,7 +25,7 @@
         
         public function deposit ($amount) 
         {
-            $this->balance = $balance + $amount;
+            $this->balance = $this->balance + $amount;
             return $this->balance;
 
         } // end deposit
@@ -37,7 +37,7 @@
         
         public function getStartDate() 
         {
-            return $this->startDt;
+            return $this->startDate;
         } // end getStartDate
 
         public function getBalance() 
@@ -48,15 +48,15 @@
 
         public function getAccountId() 
         {
-            return $this->aaccountId;
+            return $this->accountId;
         } // end getAccountId
 
         // Display AccountID, Balance and StartDate in a nice format
         protected function getAccountDetails()
         {
             return "Account ID: " . $this->accountId . "<br />" .
-            "Balance: " . $this->balance . "br />" . 
-            "Start Date: " . $this->startDt;
+            "Balance: " . $this->balance . "<br />" . 
+            "Start Date: " . $this->startDate;
         } // end getAccountDetails
         
     } // end account
