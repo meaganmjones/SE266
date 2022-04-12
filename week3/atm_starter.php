@@ -61,12 +61,10 @@ include_once "savings.php";
 
     <form method="post">
        
-        <input type="hidden" name="checkingAccountId" value="C123" />
-        <input type="hidden" name="checkingDate" value="12-20-2019" />
-        <input type="hidden" name="checkingBalance" value="1000" />
-        <input type="hidden" name="savingsAccountId" value="S123" />
-        <input type="hidden" name="savingsDate" value="03-20-2020" />
-        <input type="hidden" name="savingsBalance" value="5000" />
+       
+        
+        
+
         
     <h1>ATM</h1>
         <div class="wrapper">
@@ -76,6 +74,10 @@ include_once "savings.php";
                     
                     <div class="accountInner">
                         <h3>Checking</h3>
+                        <input type="hidden" name="checkingAccountId" value="C123" />
+                        <input type="hidden" name="checkingDate" value="12-20-2019" />
+                        <input type="hidden" name="checkingBalance" value="1000" />
+
                         <input type="text" name="checkingWithdrawAmount" value="" />
                         <input type="submit" name="withdrawChecking" value="Withdraw" />
                     </div>
@@ -91,6 +93,9 @@ include_once "savings.php";
                     
                     <div class="accountInner">
                     <h3>Savings</h3>
+                    <input type="hidden" name="savingsAccountId" value="S123" />
+                    <input type="hidden" name="savingsDate" value="03-20-2020" />
+                    <input type="hidden" name="savingsBalance" value="5000" />
                         <input type="text" name="savingsWithdrawAmount" value="" />
                         <input type="submit" name="withdrawSavings" value="Withdraw" />
                     </div>
