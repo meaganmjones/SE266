@@ -15,12 +15,15 @@ include_once "account.php";
 
            parent::__construct($id,$bal,$dt);
         } // end constructor
+
         public function withdrawal($amount) 
         {
-            if ($amount <= $saving_bal){
-                return True;
+           // $diff = $this->saving_bal - $amount;
+            if ($this->saving_bal - $amount >= 0){
+                // $this->saving_bal = $this->saving_bal - $amount;
+                return true;
             }else{
-                return False;
+                return false;
             }
         } //end withdrawal
 
@@ -39,8 +42,8 @@ include_once "account.php";
 // The code below runs everytime this class loads and 
 // should be commented out after testing.
 
-    $savings = new SavingsAccount('S123', 5000, '03-20-2020');
+    // $savings = new SavingsAccount('S123', 5000, '03-20-2020');
     
-    echo $savings->getAccountDetails();
+    // echo $savings->getAccountDetails();
     
 ?>

@@ -2,11 +2,19 @@
 <?php
 include_once "checking.php";
 include_once "savings.php";
+include_once "account.php";
 
+//initialize variables
+$saving_ID = "";
+$saving_bal = 0;
+$saving_date = "";
+$withdraw = 0;
+
+//when buttons get pressed do this:
     if (isset ($_POST['withdrawChecking'])) 
     {
-        //$checking = new CheckingAccount('C123', 1000, '12-20-2019');
-        //echo $checking;
+
+     
     } 
     else if (isset ($_POST['depositChecking'])) 
     {
@@ -14,7 +22,21 @@ include_once "savings.php";
     } 
     else if (isset ($_POST['withdrawSavings'])) 
     {
-        echo "I pressed the savings withdrawal button";
+        //grabbing the info from the form
+        $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
+        $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
+        $saving_date = filter_input(INPUT_POST, 'savingsDate');
+        $withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
+        
+        //creating a new instance of the savings account class
+        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+            
+        //calling withdrawal function THIS AINT WORKING THO!!!!!!!!
+            if($savings->withdrawal($withdraw)){
+                echo $savings->getAccountDetails();
+            }else{
+                echo 'insufficient funds';
+            }
     } 
     else if (isset ($_POST['depositSavings'])) 
     {
