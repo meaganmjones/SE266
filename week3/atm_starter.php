@@ -5,10 +5,22 @@ include_once "savings.php";
 include_once "account.php";
 
 //initialize variables
-$saving_ID = "";
-$saving_bal = 0;
-$saving_date = "";
-$withdraw = 0;
+
+        //grabbing the info from the form
+        $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
+        $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
+        $saving_date = filter_input(INPUT_POST, 'savingsDate');
+        $withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
+        
+
+        //creating a new instance of the savings account class
+        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+
+// $savings = "";
+// $saving_ID = "";
+// $saving_bal = 0;
+// $saving_date = "";
+// $withdraw = 0;
 
 //when buttons get pressed do this:
     if (isset ($_POST['withdrawChecking'])) 
@@ -22,21 +34,30 @@ $withdraw = 0;
     } 
     else if (isset ($_POST['withdrawSavings'])) 
     {
-        //grabbing the info from the form
-        $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
-        $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
-        $saving_date = filter_input(INPUT_POST, 'savingsDate');
-        $withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
+        // //grabbing the info from the form
+        // $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
+        // $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
+        // $saving_date = filter_input(INPUT_POST, 'savingsDate');
+        // $withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
         
-        //creating a new instance of the savings account class
-        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
-            
+
+        // //creating a new instance of the savings account class
+        // $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+
         //calling withdrawal function THIS AINT WORKING THO!!!!!!!!
-            if($savings->withdrawal($withdraw)){
-                echo $savings->getAccountDetails();
-            }else{
-                echo 'insufficient funds';
-            }
+        if($savings->withdrawal($withdraw)){
+            //echo $savings->getAccountDetails();
+            $saving_bal = $saving_bal - $withdraw;
+            $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+            echo $savings->getAccountDetails();
+            
+        }else{
+            echo 'insufficient funds';
+        }
+
+
+            
+
     } 
     else if (isset ($_POST['depositSavings'])) 
     {
