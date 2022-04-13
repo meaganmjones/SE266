@@ -46,9 +46,9 @@ include_once "account.php";
 
         //calling withdrawal function THIS AINT WORKING THO!!!!!!!!
         if($savings->withdrawal($withdraw)){
-            //echo $savings->getAccountDetails();
-            $saving_bal = $saving_bal - $withdraw;
-            $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+     
+            // $saving_bal = $saving_bal - $withdraw;
+            // $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
             echo $savings->getAccountDetails();
             
         }else{

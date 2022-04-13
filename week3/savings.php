@@ -20,7 +20,8 @@ include_once "account.php";
         {
            // $diff = $this->saving_bal - $amount;
             if ($this->saving_bal - $amount >= 0){
-                $diff = $this->saving_bal - $amount;
+                $this->saving_bal = $this->saving_bal - $amount;
+                echo $this->saving_bal;
                 return true;
             }else{
                 return false;
