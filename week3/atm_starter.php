@@ -14,7 +14,7 @@ include_once "account.php";
         
 
         //creating a new instance of the savings account class
-        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+       // $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
 
 // $savings = "";
 // $saving_ID = "";
@@ -139,8 +139,13 @@ include_once "account.php";
                     <input type="hidden" name="savingsAccountId" value="S123" />
                     <input type="hidden" name="savingsDate" value="03-20-2020" />
                     <input type="hidden" name="savingsBalance" value="5000" />
-                        <input type="text" name="savingsWithdrawAmount" value="" />
-                        <input type="submit" name="withdrawSavings" value="Withdraw" />
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <input type="text" name="savingsWithdrawAmount" value="" />
+                    <input type="submit" name="withdrawSavings" value="Withdraw" />
                     </div>
                     <div class="accountInner">
                         <input type="text" name="savingsDepositAmount" value="" />
