@@ -7,48 +7,48 @@ include_once "account.php";
 //initialize variables
 
         //grabbing the info from the form
+        //savings
+        
         $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
         $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
         $saving_date = filter_input(INPUT_POST, 'savingsDate');
-        $withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
+        $saving_withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
+        $saving_deposit = filter_input(INPUT_POST, 'savingsDepositAmount');
+        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+        //checking
         
-
-        //creating a new instance of the savings account class
-       // $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
-
-// $savings = "";
-// $saving_ID = "";
-// $saving_bal = 0;
-// $saving_date = "";
-// $withdraw = 0;
+        $checking_ID = filter_input(INPUT_POST, 'checkingAccountId');
+        $checking_bal = filter_input(INPUT_POST, 'checkingBalance');
+        $checking_date = filter_input(INPUT_POST, 'checkingDate');
+        $checking_withdraw = filter_input(INPUT_POST, 'checkingWithdrawAmount');
+        $checking_deposit = filter_input(INPUT_POST, 'checkingDepositAmount');
+        $checking = new CheckingAccount($checking_ID, $checking_bal, $checking_date);
 
 //when buttons get pressed do this:
     if (isset ($_POST['withdrawChecking'])) 
     {
-
+        
+        if($checking->withdrawal($checking_withdraw)){
+            $checking = new CheckingAccount($checking_ID, ($checking_bal - $checking_withdraw), $checking_date);
+            echo $checking->getAccountDetails();
+        }else{
+            echo 'insufficient funds';
+        }
      
     } 
     else if (isset ($_POST['depositChecking'])) 
     {
-        echo "I pressed the checking deposit button";
+        $checking->deposit($checking_deposit);
+        echo $checking->getAccountDetails();
     } 
     else if (isset ($_POST['withdrawSavings'])) 
     {
-        // //grabbing the info from the form
-        // $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
-        // $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
-        // $saving_date = filter_input(INPUT_POST, 'savingsDate');
-        // $withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
-        
-
-        // //creating a new instance of the savings account class
-        // $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
 
         //calling withdrawal function THIS AINT WORKING THO!!!!!!!!
-        if($savings->withdrawal($withdraw)){
+        if($savings->withdrawal($saving_withdraw)){
      
-            // $saving_bal = $saving_bal - $withdraw;
-            // $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+            //$saving_bal = $saving_bal - $saving_withdraw;
+            $savings = new SavingsAccount($saving_ID, ($saving_bal - $saving_withdraw), $saving_date);
             echo $savings->getAccountDetails();
             
         }else{
@@ -61,7 +61,8 @@ include_once "account.php";
     } 
     else if (isset ($_POST['depositSavings'])) 
     {
-        echo "I pressed the savings deposit button";
+        $savings->deposit($saving_deposit);
+        echo $savings->getAccountDetails();
     } 
      
 ?>
@@ -139,11 +140,6 @@ include_once "account.php";
                     <input type="hidden" name="savingsAccountId" value="S123" />
                     <input type="hidden" name="savingsDate" value="03-20-2020" />
                     <input type="hidden" name="savingsBalance" value="5000" />
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
                     <input type="text" name="savingsWithdrawAmount" value="" />
                     <input type="submit" name="withdrawSavings" value="Withdraw" />
                     </div>
