@@ -10,7 +10,7 @@ include_once "savings.php";
         $saving_ID = "S123";
         $saving_date = "03-20-2020";
         $saving_bal = 1200;
-        //$savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
 
 
         //checking
@@ -26,6 +26,7 @@ include_once "savings.php";
     {
         
         if($checking->withdrawal($checking_withdraw)){
+            $checking_bal = $checking_bal - $checking_withdraw;
             $checking = new CheckingAccount($checking_ID, $checking_bal, $checking_date);
             echo $checking->getAccountDetails();
         }else{
@@ -43,8 +44,6 @@ include_once "savings.php";
         $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
         //calling withdrawal function
         if($savings->withdrawal($saving_withdraw)){
-        
-     
             //$saving_bal = $saving_bal - $saving_withdraw;
             $savings = new SavingsAccount($saving_ID, ($saving_bal - $saving_withdraw), $saving_date);
             echo $savings->getAccountDetails();
@@ -119,7 +118,6 @@ include_once "savings.php";
                         <input type="hidden" name="checkingAccountId" value="C123" />
                         <input type="hidden" name="checkingDate" value="12-20-2019" />
                         <input type="hidden" name="checkingBalance" value="" />
-
                         <input type="text" name="checkingWithdrawAmount" value="" />
                         <input type="submit" name="withdrawChecking" value="Withdraw" />
                     </div>
