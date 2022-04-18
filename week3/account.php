@@ -8,7 +8,7 @@
 		You should implement all other methods in the class
 	*/
 
-    require "atm_starter.php";
+    //require "atm_starter.php";
 	
     abstract class Account 
     {

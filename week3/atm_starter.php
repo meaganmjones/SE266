@@ -2,19 +2,22 @@
 <?php
 include_once "checking.php";
 include_once "savings.php";
-include_once "account.php";
+//include_once "account.php";
 
 //initialize variables
-
+    //$saving_bal = 1000;
         //grabbing the info from the form
         //savings
         
-        $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
-        $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
-        $saving_date = filter_input(INPUT_POST, 'savingsDate');
+        // $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
+        // $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
+        // $saving_date = filter_input(INPUT_POST, 'savingsDate');
         $saving_withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
         $saving_deposit = filter_input(INPUT_POST, 'savingsDepositAmount');
-        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+        $saving_ID = "S123";
+        $saving_date = "03-20-2020";
+        $saving_bal = 1200;
+        //$savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
         //checking
         
         $checking_ID = filter_input(INPUT_POST, 'checkingAccountId');
@@ -43,9 +46,10 @@ include_once "account.php";
     } 
     else if (isset ($_POST['withdrawSavings'])) 
     {
-
+        $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
         //calling withdrawal function THIS AINT WORKING THO!!!!!!!!
         if($savings->withdrawal($saving_withdraw)){
+        
      
             //$saving_bal = $saving_bal - $saving_withdraw;
             $savings = new SavingsAccount($saving_ID, ($saving_bal - $saving_withdraw), $saving_date);
@@ -120,7 +124,7 @@ include_once "account.php";
                         <h3>Checking</h3>
                         <input type="hidden" name="checkingAccountId" value="C123" />
                         <input type="hidden" name="checkingDate" value="12-20-2019" />
-                        <input type="hidden" name="checkingBalance" value="1000" />
+                        <input type="hidden" name="checkingBalance" value=<?php $saving_bal ?> />
 
                         <input type="text" name="checkingWithdrawAmount" value="" />
                         <input type="submit" name="withdrawChecking" value="Withdraw" />
@@ -139,7 +143,7 @@ include_once "account.php";
                     <h3>Savings</h3>
                     <input type="hidden" name="savingsAccountId" value="S123" />
                     <input type="hidden" name="savingsDate" value="03-20-2020" />
-                    <input type="hidden" name="savingsBalance" value="5000" />
+                    <input type="hidden" name="savingsBalance" value= <?php $saving_bal ?>/>
                     <input type="text" name="savingsWithdrawAmount" value="" />
                     <input type="submit" name="withdrawSavings" value="Withdraw" />
                     </div>
