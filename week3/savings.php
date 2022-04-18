@@ -18,10 +18,8 @@ include_once "account.php";
 
         public function withdrawal($amount) 
         {
-           // $diff = $this->saving_bal - $amount;
             if ($this->saving_bal - $amount >= 0){
-                $this->saving_bal = $this->saving_bal - $amount;
-               // echo $this->saving_bal;
+
                 return true;
             }else{
                 return false;

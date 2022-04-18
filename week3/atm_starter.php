@@ -5,26 +5,20 @@ include_once "savings.php";
 //include_once "account.php";
 
 //initialize variables
-    //$saving_bal = 1000;
-        //grabbing the info from the form
-        //savings
-        
-        // $saving_ID =  filter_input(INPUT_POST, 'savingsAccountId');
-        // $saving_bal = filter_input(INPUT_POST, 'savingsBalance');
-        // $saving_date = filter_input(INPUT_POST, 'savingsDate');
         $saving_withdraw = filter_input(INPUT_POST, 'savingsWithdrawAmount');
         $saving_deposit = filter_input(INPUT_POST, 'savingsDepositAmount');
         $saving_ID = "S123";
         $saving_date = "03-20-2020";
         $saving_bal = 1200;
         //$savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
+
+
         //checking
-        
-        $checking_ID = filter_input(INPUT_POST, 'checkingAccountId');
-        $checking_bal = filter_input(INPUT_POST, 'checkingBalance');
-        $checking_date = filter_input(INPUT_POST, 'checkingDate');
         $checking_withdraw = filter_input(INPUT_POST, 'checkingWithdrawAmount');
         $checking_deposit = filter_input(INPUT_POST, 'checkingDepositAmount');
+        $checking_ID = "C123";
+        $checking_date = "12-20-2019";
+        $checking_bal = 200;
         $checking = new CheckingAccount($checking_ID, $checking_bal, $checking_date);
 
 //when buttons get pressed do this:
@@ -32,7 +26,7 @@ include_once "savings.php";
     {
         
         if($checking->withdrawal($checking_withdraw)){
-            $checking = new CheckingAccount($checking_ID, ($checking_bal - $checking_withdraw), $checking_date);
+            $checking = new CheckingAccount($checking_ID, $checking_bal, $checking_date);
             echo $checking->getAccountDetails();
         }else{
             echo 'insufficient funds';
@@ -47,7 +41,7 @@ include_once "savings.php";
     else if (isset ($_POST['withdrawSavings'])) 
     {
         $savings = new SavingsAccount($saving_ID, $saving_bal, $saving_date);
-        //calling withdrawal function THIS AINT WORKING THO!!!!!!!!
+        //calling withdrawal function
         if($savings->withdrawal($saving_withdraw)){
         
      
@@ -124,7 +118,7 @@ include_once "savings.php";
                         <h3>Checking</h3>
                         <input type="hidden" name="checkingAccountId" value="C123" />
                         <input type="hidden" name="checkingDate" value="12-20-2019" />
-                        <input type="hidden" name="checkingBalance" value=<?php $saving_bal ?> />
+                        <input type="hidden" name="checkingBalance" value="" />
 
                         <input type="text" name="checkingWithdrawAmount" value="" />
                         <input type="submit" name="withdrawChecking" value="Withdraw" />

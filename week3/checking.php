@@ -1,7 +1,6 @@
 <?php
  
  	include_once "account.php";
-    //include_once "atm_starter.php";
     class CheckingAccount extends Account 
     {
         const OVERDRAW_LIMIT = -200;
@@ -21,8 +20,7 @@
 
         public function withdrawal($amount) 
         {
-
-            if($amount >= OVERDRAW_LIMIT){
+            if($this->checking_bal - $amount >= -200){
                 return true;
             }else{
                 return false;
