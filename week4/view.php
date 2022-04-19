@@ -1,12 +1,12 @@
 <?php
-        include __DIR__ . '/model/model_teams.php';
+        include __DIR__ . '/model/model_patient.php';
         
-        $teams = getTeams();
+        $patients = getPatients();
 ?>
     
 <html lang="en">
 <head>
-  <title>View NFL Team</title>
+  <title>View Patients</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -36,8 +36,9 @@
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo $row['patientFirstName']; ?></td>
                 <td><?php echo $row['patientLastName']; ?></td>
-                <td><?php echo $row['patientMarried']; ?></td>            
-                <td><?php echo $row['patientBirthDate']; ?></td>         
+                <td><?php echo $row['patientBirthDate']; ?></td>  
+                <td><?php echo "get the age bro"; ?></td>          
+                <td><?php echo $row['patientMarried']; ?></td>         
             
             </tr>
         <?php endforeach; ?>
