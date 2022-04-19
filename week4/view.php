@@ -17,22 +17,28 @@
 <div class="container">
      <div class="col-sm-offset-2 col-sm-10">
      
-   <h1>NFL Teams</h1>
-   <p><a href="addTeam.php">Add Team</a></p>
+   <h1>Patients</h1>
+   <p><a href="patient_add.php">Add Patient</a></p>
    <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Team Name</th>
-                <th>Division</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Birthdate</th>
+                <th>Age</th>
+                <th>Married</th>
             </tr>
         </thead>
         <tbody>
-         <?php foreach ($teams as $row): ?>
+         <?php foreach ($patients as $row): ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['teamName']; ?></td>
-                <td><?php echo $row['division']; ?></td>            
+                <td><?php echo $row['patientFirstName']; ?></td>
+                <td><?php echo $row['patientLastName']; ?></td>
+                <td><?php echo $row['patientMarried']; ?></td>            
+                <td><?php echo $row['patientBirthDate']; ?></td>         
+            
             </tr>
         <?php endforeach; ?>
         </tbody>
