@@ -1,37 +1,39 @@
 <?php
 
-    include (__DIR__ . '/db.php');
+    include (__DIR__ . '/database.php');
     
-    // Get listing of all teams
-    function getTeams () {
+    // Grab all of the patients and their info from the DB
+    function getPatients () {
         global $db;
         
         $results = [];
 
-        $stmt = $db->prepare("SELECT id, teamName, division FROM teams ORDER BY teamname"); 
+        $query = $db->prepare("SELECT * FROM patients ORDER BY patientLastName"); 
         
-        if ( $stmt->execute() && $stmt->rowCount() > 0 ) {
-             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ( $query->execute() && $query->rowCount() > 0 ) {
+             $results = $query->fetchAll(PDO::FETCH_ASSOC);
                  
          }
          
          return ($results);
     }
 
-    //Add a team to database
-    function addTeam ($team, $division) {
+    //Add a patient
+    function addOnePatient ($firstName, $lastName, $birthdate, $married) {
         global $db;
         $results = "Not added";
 
-        $stmt = $db->prepare("INSERT INTO teams SET teamName = :team, division = :division");
+        $query = $db->prepare("INSERT INTO patients SET firstName = :patientFirstName, lastName = :patientLastName, birthdate = :patientBirthDate, married = patientMarried");
 
         $binds = array(
-            ":team" => $team,
-            ":division" => $division
+            ":firstName" => $firstName,
+            ":lastName" => $lastName,
+            ":birthDate" => $birthdate,
+            ":married" => $married
         );
         
         
-        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+        if ($query->execute($binds) && $query->rowCount() > 0) {
             $results = 'Data Added';
         }
         
@@ -39,23 +41,23 @@
     }
    
     // Alternative style to add team records database.
-    function addTeam2 ($team, $division) {
-        global $db;
-        $results = "Not added";
+    // function addTeam2 ($team, $division) {
+    //     global $db;
+    //     $results = "Not added";
 
-        $stmt = $db->prepare("INSERT INTO teams SET teamName = :team, division = :division");
+    //     $stmt = $db->prepare("INSERT INTO teams SET teamName = :team, division = :division");
        
-        $stmt->bindValue(':team', $team);
-        $stmt->bindValue(':division', $division);
+    //     $stmt->bindValue(':team', $team);
+    //     $stmt->bindValue(':division', $division);
        
-        if ($stmt->execute() && $stmt->rowCount() > 0) {
-            $results = 'Data Added';
-        }
+    //     if ($stmt->execute() && $stmt->rowCount() > 0) {
+    //         $results = 'Data Added';
+    //     }
        
-        $stmt->closeCursor();
+    //     $stmt->closeCursor();
        
-        return ($results);
-    }
+    //     return ($results);
+    // }
    
     //   $result = addTeam2 ('Ajax', 'Eredivisie');
     //   echo $result;
