@@ -3,7 +3,7 @@
     include (__DIR__ . '/database.php');
     
     // Grab all of the patients and their info from the DB
-    function getPatients () {
+    function getPatients() {
         global $db;
         
         $results = [];
@@ -19,11 +19,11 @@
     }
 
     //Add a patient
-    function addOnePatient ($firstName, $lastName, $birthdate, $married) {
+    function addPatient($firstName, $lastName, $birthdate, $married) {
         global $db;
         $results = "Not added";
 
-        $query = $db->prepare("INSERT INTO patients SET firstName = :patientFirstName, lastName = :patientLastName, birthdate = :patientBirthDate, married = patientMarried");
+        $query = $db->prepare("INSERT INTO patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married");
 
         $binds = array(
             ":firstName" => $firstName,
@@ -39,6 +39,8 @@
         
         return ($results);
     }
+
+    
    
     // Alternative style to add team records database.
     // function addTeam2 ($team, $division) {
