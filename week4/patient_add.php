@@ -6,7 +6,9 @@
   if (isPostRequest()) {
     $firstName = filter_input(INPUT_POST, 'first');
     $lastName = filter_input(INPUT_POST, 'last');
-    $result = addPatients($firstName, $lastName, $birthdate, $married);
+    $birthdate = filter_input(INPUT_POST, 'birth');
+    $married = filter_input(INPUT_POST, 'married');
+    $result = addPatient($firstName, $lastName, $birthdate, $married);
   }
 ?>
     
@@ -31,14 +33,14 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="first name">First Name: </label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="first" placeholder="First Name" name="firstName">
+        <input type="text" class="form-control" id="first" placeholder="First Name" name="first">
       </div>
     </div>
 
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Last Name: </label>
       <div class="col-sm-10">          
-        <input type="text" class="form-control" id="last" placeholder="Last Name" name="lastName">
+        <input type="text" class="form-control" id="last" placeholder="Last Name" name="last">
       </div>
     </div>
 
@@ -52,9 +54,9 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Marriage Status: </label>
       <div class="col-sm-10">  
-        <input type="radio" id="html" name="married" value="No">
+        <input type="radio" id="html" name="married" value=0>
         <label for="html">No</label><br>
-        <input type="radio" id="css" name="married" value="Yes">
+        <input type="radio" id="css" name="married" value=1>
         <label for="css">Yes</label><br>
       </div>
     </div>

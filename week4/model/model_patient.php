@@ -40,7 +40,45 @@
         return ($results);
     }
 
+        //Update a patient
+        function updatePatient($id, $firstName, $lastName, $birthdate, $married) {
+            global $db;
+            $results = "Not updated";
     
+            $query = $db->prepare("UPDATE patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married WHERE patientID = :patientID");
+    
+            $binds = array(
+                ":patientID" => $id,
+                ":firstName" => $firstName,
+                ":lastName" => $lastName,
+                ":birthDate" => $birthdate,
+                ":married" => $married
+            );
+            
+            
+            if ($query->execute($binds) && $query->rowCount() > 0) {
+                $results = 'Data Added';
+            }
+            
+            return ($results);
+        }
+
+        //delete patient
+        function deletePatient($id){
+            global $db;
+            $results = "not deleted";
+
+            $query = $db->prepare("DELETE FROM patients WHERE patientID = :id");
+
+            $query->bindValue(':id', $id);
+
+            if($query->rowCount() > 0){
+                $results = "Patient info deleted";
+            }
+
+            return ($results);
+        }
+
    
     // Alternative style to add team records database.
     // function addTeam2 ($team, $division) {
