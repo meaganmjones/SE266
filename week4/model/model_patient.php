@@ -72,7 +72,7 @@
 
             $query->bindValue(':id', $id);
 
-            if($query->rowCount() > 0){
+            if($query->execute() && $query->rowCount() > 0){
                 $results = "Patient info deleted";
             }
 
