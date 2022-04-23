@@ -6,10 +6,11 @@
     function getPatients() {
         global $db;
         
-        $results = [];
+        $results = []; //store in this array
 
         $query = $db->prepare("SELECT * FROM patients ORDER BY patientLastName"); 
         
+        //This runs the query and snatches our patient info
         if ( $query->execute() && $query->rowCount() > 0 ) {
              $results = $query->fetchAll(PDO::FETCH_ASSOC);
                  

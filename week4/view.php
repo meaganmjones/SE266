@@ -1,17 +1,20 @@
 <?php
-        include __DIR__ . '/model/model_patient.php';
+    include __DIR__ . '/model/model_patient.php';
         
 
-   if (isset($_POST)) {
-    $id = filter_input(INPUT_POST, 'patientId');
-    deletePatient($id);
-   }
+    //need this to delete stuff
+    if (isset($_POST)) {
+        //grab the id so it knows exactly which patient to get rid of
+        $id = filter_input(INPUT_POST, 'patientId');
+        deletePatient($id);
+    }
+    //get the info from the DB
     $patients = getPatients();
 ?>
     
 <html lang="en">
 <head>
-  <title>Update Patient</title>
+  <title>Patients</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -37,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-         <?php foreach ($patients as $row): ?>
+         <?php foreach ($patients as $row): //loop through the patients in the DB and display one by one?>
             <tr>
                 <td>
 
@@ -51,7 +54,7 @@
                 <td><?php echo $row['patientBirthDate']; ?></td>  
                 <td><?php echo "get the age bro"; ?></td>          
                 <td><?php echo $row['patientMarried']; ?></td>
-                <td><p><a href="update.php?action=update&patientId=<?php echo $row['id']; ?>">update</a></p></td>
+                <td><p><a href="patient_add.php?action=update&patientId=<?php echo $row['id']; ?>">update</a></p></td>
             
             </tr>
         <?php endforeach; ?>
