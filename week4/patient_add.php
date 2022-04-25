@@ -26,6 +26,7 @@
 
       //otherwise set the fields to blank to prepare to add a patient
       }else{
+        
           $firstName = '';
           $lastName = '';
           $birthDate = '';
