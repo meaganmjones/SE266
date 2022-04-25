@@ -5,18 +5,19 @@
   include __DIR__ . '/include/function.php';
 
   //Grab info from URL and decide if if action is is 'add' or 'update':
-  var_dump($_GET);
-  // var_dump($_POST);
+
   if (isset($_GET['action'])){
+    //get action and id from URL
     $action = filter_input(INPUT_GET, 'action');
-    //var_dump($action);
+    
     $id = filter_input(INPUT_GET, 'id');
-    var_dump($id);
+    
+
     //if action is 'update':
     if($action == 'update'){
         //run getOnePatient function using the ID and store it as $row
         $row = getOnePatient($id);
-        //var_dump($row);
+       
         //get the info from getOnePatient
         $id = $row['id'];
         $firstName = $row['patientFirstName'];
@@ -35,7 +36,7 @@
 
   }
     elseif(isPostRequest($_POST['action'])){
-      echo 'GOT HERE 1st';
+      //get info from form
       $action = filter_input(INPUT_POST, 'action');
       $id = filter_input(INPUT_POST, 'id');
       $firstName = filter_input(INPUT_POST, 'first');
