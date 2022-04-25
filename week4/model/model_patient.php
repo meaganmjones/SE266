@@ -19,6 +19,30 @@
          return ($results);
     }
 
+    //get singular patient
+    function getOnePatient($id){
+        global $db;
+
+        $results = [];
+
+        $query = $db->prepare("SELECT * FROM patients WHERE id = :id");
+        $query->bindValue(':id', $id);
+
+                //This runs the query and snatches our patient info
+                if ($query->execute() && $query->rowCount() > 0) {
+                    $results = $query->fetch(PDO::FETCH_ASSOC);
+                        
+                }
+                else{
+                    return(":(");
+                }
+                
+                return ($results);
+           
+    }
+    // $getOne = getOnePatient(28);
+    // var_dump($getOne);
+
     //Add a patient
     function addPatient($firstName, $lastName, $birthdate, $married) {
         global $db;
@@ -46,10 +70,10 @@
             global $db;
             $results = "Not updated";
     
-            $query = $db->prepare("UPDATE patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married WHERE patientID = :patientID");
+            $query = $db->prepare("UPDATE patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married WHERE id = :id");
     
             $binds = array(
-                ":patientID" => $id,
+                ":id" => $id,
                 ":firstName" => $firstName,
                 ":lastName" => $lastName,
                 ":birthDate" => $birthdate,

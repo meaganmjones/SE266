@@ -1,60 +1,27 @@
- <?php
+<?php
   
   // This code runs everything the page loads
   include __DIR__ . '/model/model_patient.php';
   include __DIR__ . '/include/function.php';
 
-  //Grab info from URL and decide if if action is is 'add' or 'update':
-  //var_dump($_GET);
-  // var_dump($_POST);
-  if (isset($_GET['action'])){
-    $action = filter_input(INPUT_GET, 'action');
-    //var_dump($action);
-    $id = filter_input(INPUT_GET, 'patientId');
-    var_dump($id);
-    //if action is 'update':
-    if($action == 'update'){
-        //run getOnePatient function using the ID and store it as $row
-        $row = getOnePatient($id);
-        var_dump($row);
-        //get the info from getOnePatient
-        $id = $row["id"];
-        $firstName = $row["patientFirstName"];
-        $lastName = $row['patientLastName'];
-        $birthDate = $row['patientBirthDate'];
-        $married = $row['patientMarried'];
+  $id = filter_input(INPUT_POST, 'id');
+  $action = filter_input(INPUT_POST, 'action');
+  $firstName = "";
+  $lastName = "";
+  $birthDate = "";
+  $married = "";
+  $row = "";
+  
 
-      //otherwise set the fields to blank to prepare to add a patient
-      }else{
-          $firstName = '';
-          $lastName = '';
-          $birthDate = '';
-          $married = '';
-      }   
-
+  if (isPostRequest($_POST, ['submit'])) {
+    $id = filter_input(INPUT_POST, 'id');
+    $action = filter_input(INPUT_POST, 'action');
+    $firstName = filter_input(INPUT_POST, 'first');
+    $lastName = filter_input(INPUT_POST, 'last');
+    $birthdate = filter_input(INPUT_POST, 'birth');
+    $married = filter_input(INPUT_POST, 'married');
+    $result = addPatient($firstName, $lastName, $birthdate, $married);
   }
-        //grab action info from URL
-    elseif(isPostRequest($_POST['action'])){
-      $action = filter_input(INPUT_POST, 'action');
-      $id = filter_input(INPUT_POST, 'id');
-      $firstName = filter_input(INPUT_POST, 'first');
-      $lastName = filter_input(INPUT_POST, 'last');
-      $birthDate = filter_input(INPUT_POST, 'birth');
-      $married = filter_input(INPUT_POST, 'married');
-      //if action is add:
-      if(isPostRequest() && $action == 'add'){
-        //run the addPatient function
-        $result = addPatient($firstName, $lastName, $birthDate, $married);
-        header('Location: view.php');
-      }
-      //otherwise it's an update
-      elseif(isPostRequest() && $action == 'update'){
-        //update the DB with info from the form
-        $result = updatePatient($id, $firstName, $lastName, $birthDate, $married);
-        header('Location: view.php');
-      }
-    }
-
 
 ?>
     
@@ -77,9 +44,9 @@
 
 
   <!--Section for the first name -->
-  <form class="form-horizontal" action="patient_add.php?action=add" method="get">
+  <form class="form-horizontal" action="" method="get">
   <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the ID data (if there is any) -->
-  <input type='text' id='id' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
+  <input type='text' id='patientId' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
     <div class="form-group">
       <label class="control-label col-sm-2" for="first name">First Name: </label>
       <div class="col-sm-10">
@@ -119,7 +86,7 @@
     <!--Section for add/update button -->
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default"><?php echo $action; ?> Patient</button>
+        <button type="submit" class="btn btn-default" value="add"><?php echo $action; ?> Patient</button>
         <?php
           //feedback
         ?>

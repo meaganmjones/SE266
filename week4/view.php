@@ -26,7 +26,7 @@
      <div class="col-sm-offset-2 col-sm-10">
      
    <h1>Patients</h1>
-   <p><a href="patient_add.php">Add Patient</a></p>
+   <p><a href="patient_add.php?action=add">Add Patient</a></p>
    <table class="table table-striped">
         <thead>
             <tr>
@@ -46,7 +46,8 @@
 
                     <form action='view.php' method = 'post'>
                         <input type='hidden' name='patientId' value=<?php echo $row['id']; ?>>
-                        <button type='submite'>delete</a></p>
+                        <td><?php echo$row["id"]; ?>
+                        <button type='submit'>delete</a></p>
                     </form>
                 </td>
                 <td><?php echo $row['patientFirstName']; ?></td>
