@@ -103,6 +103,17 @@
 
             return ($results);
         }
+
+        //calculate the age
+        function getAge($birthday){
+            $now = date("Y-m-d");
+            // found this on stackoverflow https://stackoverflow.com/questions/3776682/php-calculate-age
+            $age = date_diff(date_create($now), date_create($birthday))->y;
+
+            return ($age);
+        }
     
+        // $today = getAge('2000-01-15');
+        // echo $today;
 
 ?>

@@ -46,14 +46,17 @@
 
                     <form action='view.php' method = 'post'>
                         <input type='hidden' name='patientId' value=<?php echo $row['id']; ?>>
-                        <td><?php echo$row["id"]; ?>
                         <button type='submit'>delete</a></p>
                     </form>
                 </td>
                 <td><?php echo $row['patientFirstName']; ?></td>
                 <td><?php echo $row['patientLastName']; ?></td>
-                <td><?php echo $row['patientBirthDate']; ?></td>  
-                <td><?php echo "get the age bro"; ?></td>          
+                <td><?php echo $row['patientBirthDate']; ?></td> 
+                <?php 
+                    //$bday = $row['patientBirthDate'];
+                    $age = getAge($row['patientBirthDate']);
+                ?> 
+                <td><?php echo $age; ?></td>          
                 <td><?php echo $row['patientMarried']; ?></td>
                 <td><p><a href="patient_add.php?action=update&id=<?php echo $row['id']; ?>">update</a></p></td>
             
