@@ -55,7 +55,7 @@
                 <td><?php echo $row['patientBirthDate']; ?></td>  
                 <td><?php echo "get the age bro"; ?></td>          
                 <td><?php echo $row['patientMarried']; ?></td>
-                <td><p><a href="patient_add.php?action=update&patientId=<?php echo $row['id']; ?>">update</a></p></td>
+                <td><p><a href="patient_add.php?action=update&id=<?php echo $row['id']; ?>">update</a></p></td>
             
             </tr>
         <?php endforeach; ?>

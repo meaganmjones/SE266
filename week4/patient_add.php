@@ -5,21 +5,21 @@
   include __DIR__ . '/include/function.php';
 
   //Grab info from URL and decide if if action is is 'add' or 'update':
-  //var_dump($_GET);
+  var_dump($_GET);
   // var_dump($_POST);
   if (isset($_GET['action'])){
     $action = filter_input(INPUT_GET, 'action');
     //var_dump($action);
-    $id = filter_input(INPUT_GET, 'patientId');
+    $id = filter_input(INPUT_GET, 'id');
     var_dump($id);
     //if action is 'update':
     if($action == 'update'){
         //run getOnePatient function using the ID and store it as $row
         $row = getOnePatient($id);
-        var_dump($row);
+        //var_dump($row);
         //get the info from getOnePatient
-        $id = $row["id"];
-        $firstName = $row["patientFirstName"];
+        $id = $row['id'];
+        $firstName = $row['patientFirstName'];
         $lastName = $row['patientLastName'];
         $birthDate = $row['patientBirthDate'];
         $married = $row['patientMarried'];
@@ -34,8 +34,8 @@
       }   
 
   }
-        //grab action info from URL
     elseif(isPostRequest($_POST['action'])){
+      echo 'GOT HERE 1st';
       $action = filter_input(INPUT_POST, 'action');
       $id = filter_input(INPUT_POST, 'id');
       $firstName = filter_input(INPUT_POST, 'first');
@@ -45,6 +45,7 @@
       //if action is add:
       if(isPostRequest() && $action == 'add'){
         //run the addPatient function
+        echo 'GOT HERE';
         $result = addPatient($firstName, $lastName, $birthDate, $married);
         header('Location: view.php');
       }
@@ -52,6 +53,9 @@
       elseif(isPostRequest() && $action == 'update'){
         //update the DB with info from the form
         $result = updatePatient($id, $firstName, $lastName, $birthDate, $married);
+        header('Location: view.php');
+      }
+      else{
         header('Location: view.php');
       }
     }
@@ -78,7 +82,7 @@
 
 
   <!--Section for the first name -->
-  <form class="form-horizontal" action="patient_add.php?action=add" method="get">
+  <form class="form-horizontal" action="patient_add.php" method="post">
   <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the ID data (if there is any) -->
   <input type='text' id='id' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
     <div class="form-group">
@@ -107,7 +111,7 @@
     <!--Section for married data -->
     <!--How do I fill in the radio buttons using the $married variable? The associated values are what gets imported into the DB, so I don't want to change them -->
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Marriage Status: </label>
+      <label class="control-label col-sm-2" for="pwd">Marital Status: </label>
       <div class="col-sm-10">  
         <input type="radio" id="html" name="married" value=0>
         <label for="html">No</label><br>
@@ -120,9 +124,11 @@
     <!--Section for add/update button -->
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default"><?php echo $action; ?> Patient</button>
+        <button type="submit" class="btn btn-default" name='submit'><?php echo $action; ?> Patient</button>
         <?php
-          //feedback
+          // if(isset($_POST['submit'])){
+          //   echo "successful";
+          //}
         ?>
       </div>
     </div>
