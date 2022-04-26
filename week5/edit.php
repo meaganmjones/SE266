@@ -1,6 +1,6 @@
 <?php
   
-  // This code runs everything the page loads
+  // This code runs everytime the page loads
   include __DIR__ . '/model/model_patient.php';
   include __DIR__ . '/include/function.php';
 
