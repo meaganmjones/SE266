@@ -104,6 +104,43 @@
             return ($results);
         }
 
+        //search
+        function searchPatients($first, $last, $married, $dob) {
+            global $db;
+            $binds = array();
+        
+            $sql =  "SELECT * FROM  patients WHERE 0=0";
+            if ($first != "") {
+                $sql .= " AND patientFirstName LIKE :firstName";
+                $binds['firstName'] = '%'.$first.'%';
+            }
+        
+            if ($last != "") {
+                $sql .= " AND patientLastName LIKE :lastName";
+                $binds['lastName'] = '%'.$last.'%';
+            }
+
+            if($dob != ""){
+                $sql .= " AND patientBirthDate LIKE :birthDate";
+                $binds['birthDate'] = '%'.$birthDate.'%';
+            }
+                
+            if ($married != "") {
+                $sql .= " AND patientMarried = :married";
+                $binds['married'] = $married;
+            }
+        
+            $results = array();
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            return ($results);
+        }
+        // $patient = searchPatients('meg', '' , '', '');
+        // var_dump($patient);
+
+
         //calculate the age
         function getAge($birthday){
             $now = date("Y-m-d");

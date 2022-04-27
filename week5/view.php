@@ -1,13 +1,45 @@
 <?php
     include __DIR__ . '/model/model_patient.php';
-        
+    include __DIR__ . '/include/function.php';
+    if(0 == 0){
 
-    //need this to delete stuff
-    if (isset($_POST)) {
-        //grab the id so it knows exactly which patient to get rid of
-        $id = filter_input(INPUT_POST, 'patientId');
-        deletePatient($id);
+    //need this to search/delete stuff
+    $patients = [];
+    if(isPostRequest()){
+        if (isset($_POST['Search'])) {
+            $firstName = '';
+            $lastName = '';
+            $married = '';
+            $birthDate = '';
+            if($_POST['fieldName'] == 'firstName'){
+                // echo 'suck my balls';
+                $firstName = $_POST['fieldValue'];
+            }
+            elseif($_POST['fieldName'] == 'lastName'){
+                $lastName = $_POST['fieldValue'];
+            }
+            elseif($_POST['fieldName'] == 'status'){
+                $married = $_POST['fieldValue'];
+            }else{
+                $birthDate = $_POST['fieldValue'];
+            }
+            
+            $patients = searchPatients($firstName, $lastName, $married, $birthDate);
+
+        }else{
+            //grab the id so it knows exactly which patient to get rid of
+            $id = filter_input(INPUT_POST, 'patientId');
+            deletePatient($id);
+            $patients = getPatients();
+        }
+    }else{
+        $patients = getPatients();
     }
+          
+    
+
+}
+
     //get the info from the DB
     $patients = getPatients();
 ?>
@@ -40,9 +72,25 @@
             </tr>
         </thead>
         <tbody>
+        <h2>Search</h2>
+                <form action="#" method="post">
+                    <input type="hidden" name="action" value="search" />
+                    <label>Search by Field:</label>
+                <select name="fieldName">
+                    <option value="">Select One</option>
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <option value="birthDate">BirthDate</option>
+                    <option value="status">Marital Status</option>              
+                </select>
+       <input type="text" name="fieldValue" />
+      <button type="submit" name="Search">Search</button>
+      
+      
          <?php foreach ($patients as $row): //loop through the patients in the DB and display one by one?>
             <tr>
                 <td>
+  </form>      
 
                     <form action='view.php' method = 'post'>
                         <input type='hidden' name='patientId' value=<?php echo $row['id']; ?>>

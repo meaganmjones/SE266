@@ -8,6 +8,8 @@ if(isPostRequest()){
 }elseif(!isset($_SESSION['username'])){
     $_SESSION['username'] = NULL;
 }
+
+echo sha1('suck my balls');
 ?>
 
 <!DOCTYPE html>
