@@ -46,5 +46,43 @@ class Users{
 
         return $results;
     }
-}
+
+    public function deleteUser($id){
+        $results = false;
+        $userTable = $this->userData; 
+
+        return $results;
+    }
+
+    public function getOneUser($id){
+        $results = [];
+        $userTable = $this->userData;
+
+        return $results;
+    }
+
+    public function getDatabaseRef(){
+        return $this->userData;
+    }
+
+    public function validateCredentials($userName, $password){
+        $isValidUser = false;
+        $userTable = $this->userData;
+
+        $query = $userTable->prepare("SELECT userPassword, userSalt FROM users WHERE userName = :userName");
+
+        $query->bindValue(':userName', $userName);
+
+        $found = ($query->execute() && $query->rowCount()>0);
+
+        if($found){
+            $results = $query->fetch(PDO::FETCH_ASSOC);
+            $hashedpw = sha1($results['userSalt'] . $password);
+            $isValidUser = ($hashedpw == $results['userPassword']);
+        }
+
+        return $isValidUser;
+
+    }
+}//end class
 ?>

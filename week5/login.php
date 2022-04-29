@@ -1,12 +1,30 @@
 <?php 
   include __DIR__ . '/include/function.php';
   include __DIR__ . '/model/users.php';
-session_start();
+  //include __DIR__ . '/include/header.php';
+
+  $_SESSION['isLoggedIn'] = false;
+
+  $message = "";
 
 if(isPostRequest()){
-    $_SESSION['username'] = filter_input(INPUT_POST, 'username');
-}elseif(!isset($_SESSION['username'])){
-    $_SESSION['username'] = NULL;
+    $userName = filter_input(INPUT_POST, 'username');
+    $password = filter_input(INPUT_POST, 'password');
+
+    $configFile = __DIR__ . '/model/dbconfig.ini';
+    try{
+      $userDatabase = new Users($configFile);
+    }catch(Exception $error){
+      echo "<h2>" . $error->getMessage() . "</h2>";
+    }
+   
+    if($userDatabase->validateCredentials($userName, $password)){
+      $_SESSION['isLoggedIn'] = true;
+
+      header('Location: view.php');
+    }else{
+      $message = "Incorrect login credentials";
+    }
 }
 
 
