@@ -2,53 +2,76 @@
 
     include (__DIR__ . '/database.php');
     
-    // Grab all of the patients and their info from the DB
-    function getPatients() {
-        global $db;
-        
-        $results = []; //store in this array
 
-        $query = $db->prepare("SELECT * FROM patients ORDER BY patientLastName"); 
-        
+    class Patients{
+
+        private $patientData;
+
+
+    public function __construct($configFile){
+        if($ini = parse_ini_file($configFile)){
+            $pdo = new PDO( "mysql:host=" . $ini['servername'].
+                            ";port=" . $ini['port'] .
+                            ";dbname=" . $ini['dbname'],
+                            $ini['username'],
+                            $ini['password']);
+
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $this->patientData = $pdo;
+        }else{
+            throw new Exception("<h2>Creation of database object failed : (</h2>", 0, null);
+        }
+    }//end construct
+
+
+ // Grab all of the patients and their info from the DB
+    public function getPatients() {
+        //global $db;
+    
+        $results = []; //store in this array
+        $patientTable = $this->patientData;
+
+        $query = $patientTable->prepare("SELECT * FROM patients ORDER BY patientLastName"); 
+    
         //This runs the query and snatches our patient info
         if ( $query->execute() && $query->rowCount() > 0 ) {
-             $results = $query->fetchAll(PDO::FETCH_ASSOC);
-                 
-         }
-         
-         return ($results);
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+             
+     }
+     
+     return ($results);
     }
 
     //get singular patient
-    function getOnePatient($id){
-        global $db;
+    public function getOnePatient($id){
+        //global $db;
 
         $results = [];
+        $patientTable = $this->patientData;
 
-        $query = $db->prepare("SELECT * FROM patients WHERE id = :id");
+        $query = $patientTable->prepare("SELECT * FROM patients WHERE id = :id");
         $query->bindValue(':id', $id);
 
-                //This runs the query and snatches our patient info
-                if ($query->execute() && $query->rowCount() > 0) {
-                    $results = $query->fetch(PDO::FETCH_ASSOC);
-                        
-                }
-                else{
-                    return(":(");
-                }
-                
-                return ($results);
-           
+            //This runs the query and snatches our patient info
+            $results = ($query->execute() && $query->rowCount() > 0);
+            
+            return ($results);
+       
     }
-    // $getOne = getOnePatient(28);
-    // var_dump($getOne);
+    // public $pat = 28;
+    // public $getOne = getOnePatient($pat);
+    // public var_dump($getOne);
 
     //Add a patient
-    function addPatient($firstName, $lastName, $birthdate, $married) {
-        global $db;
-        $results = "Not added";
+    public function addPatient($firstName, $lastName, $birthdate, $married) {
+        //global $db;
+        $results = false;
+        $patientTable = $this->patientData;
 
-        $query = $db->prepare("INSERT INTO patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married");
+        $query = $patientTable->prepare("INSERT INTO patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married");
 
         $binds = array(
             ":firstName" => $firstName,
@@ -56,101 +79,68 @@
             ":birthDate" => $birthdate,
             ":married" => $married
         );
+    
+        $results = ($query->execute($binds) && $query->rowCount() > 0);
+    
+        return ($results);
+    }
+
+    //Update a patient
+    public function updatePatient($id, $firstName, $lastName, $birthdate, $married) {
+        //global $db;
+        $results = false;
+        $patientTable = $this->patientData;
+
+        $query = $patientTable->prepare("UPDATE patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married WHERE id = :id");
+
+        $binds = array(
+            ":id" => $id,
+            ":firstName" => $firstName,
+            ":lastName" => $lastName,
+            ":birthDate" => $birthdate,
+            ":married" => $married
+        );
         
         
-        if ($query->execute($binds) && $query->rowCount() > 0) {
-            $results = 'Data Added';
-        }
+        $results = ($query->execute($binds) && $query->rowCount() > 0);
         
         return ($results);
     }
 
-        //Update a patient
-        function updatePatient($id, $firstName, $lastName, $birthdate, $married) {
-            global $db;
-            $results = "Not updated";
-    
-            $query = $db->prepare("UPDATE patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married WHERE id = :id");
-    
-            $binds = array(
-                ":id" => $id,
-                ":firstName" => $firstName,
-                ":lastName" => $lastName,
-                ":birthDate" => $birthdate,
-                ":married" => $married
-            );
-            
-            
-            if ($query->execute($binds) && $query->rowCount() > 0) {
-                $results = 'Data Added';
-            }
-            
-            return ($results);
-        }
+    //delete patient
+    public function deletePatient($id){
+        //global $db;
+        $results = false;
+        $patientTable = $this->patientData;
 
-        //delete patient
-        function deletePatient($id){
-            global $db;
-            $results = "not deleted";
+        $query = $patientTable->prepare("DELETE FROM patients WHERE id = :id");
 
-            $query = $db->prepare("DELETE FROM patients WHERE id = :id");
+        $query->bindValue(':id', $id);
 
-            $query->bindValue(':id', $id);
+        $results = ($query->execute() && $query->rowCount() > 0);
 
-            if($query->execute() && $query->rowCount() > 0){
-                $results = $query->fetch(PDO::FETCH_ASSOC);
-            }
+        return ($results);
+    }
 
-            return ($results);
-        }
+    public function getDatabaseRef(){
+        return $this->patientData;
+    }
+    //calculate the age
+    function getAge($birthday){
+        $now = date("Y-m-d");
+        // found this on stackoverflow https://stackoverflow.com/questions/3776682/php-calculate-age
+        $age = date_diff(date_create($now), date_create($birthday))->y;
 
-        //search
-        function searchPatients($first, $last, $married, $dob) {
-            global $db;
-            $binds = array();
-        
-            $sql =  "SELECT * FROM  patients WHERE 0=0";
-            if ($first != "") {
-                $sql .= " AND patientFirstName LIKE :firstName";
-                $binds['firstName'] = '%'.$first.'%';
-            }
-        
-            if ($last != "") {
-                $sql .= " AND patientLastName LIKE :lastName";
-                $binds['lastName'] = '%'.$last.'%';
-            }
+        return ($age);
+    }
 
-            if($dob != ""){
-                $sql .= " AND patientBirthDate LIKE :birthDate";
-                $binds['birthDate'] = '%'.$birthDate.'%';
-            }
-                
-            if ($married != "") {
-                $sql .= " AND patientMarried = :married";
-                $binds['married'] = $married;
-            }
-        
-            $results = array();
-            $stmt = $db->prepare($sql);
-            if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
-                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-            return ($results);
-        }
-        // $patient = searchPatients('meg', '' , '', '');
-        // var_dump($patient);
+    // $today = getAge('2000-01-15');
+    // echo $today;
+   
+    public function __deconstruct(){
+        $this->patientData = null;
+    }
 
-
-        //calculate the age
-        function getAge($birthday){
-            $now = date("Y-m-d");
-            // found this on stackoverflow https://stackoverflow.com/questions/3776682/php-calculate-age
-            $age = date_diff(date_create($now), date_create($birthday))->y;
-
-            return ($age);
-        }
-    
-        // $today = getAge('2000-01-15');
-        // echo $today;
+}
 
 ?>

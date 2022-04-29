@@ -4,6 +4,17 @@
   include __DIR__ . '/model/model_patient.php';
   include __DIR__ . '/include/function.php';
 
+  $configFile = __DIR__ . '/model/dbconfig.ini';
+  try 
+  {
+      $patientDatabase = new Patients($configFile);
+  } 
+  catch ( Exception $error ) 
+  {
+      echo "<h2>" . $error->getMessage() . "</h2>";
+  }   
+
+
   //Grab info from URL and decide if if action is is 'add' or 'update':
 
   if (isset($_GET['action'])){
@@ -16,7 +27,7 @@
     //if action is 'update':
     if($action == 'update'){
         //run getOnePatient function using the ID and store it as $row
-        $row = getOnePatient($id);
+        $row = $patientDatabase->getOnePatient($id);
        
         //get the info from getOnePatient
         $id = $row['id'];
@@ -47,13 +58,13 @@
       if(isPostRequest() && $action == 'add'){
         //run the addPatient function
         echo 'GOT HERE';
-        $result = addPatient($firstName, $lastName, $birthDate, $married);
+        $result = $patientDatabase->addPatient($firstName, $lastName, $birthDate, $married);
         header('Location: view.php');
       }
       //otherwise it's an update
       elseif(isPostRequest() && $action == 'update'){
         //update the DB with info from the form
-        $result = updatePatient($id, $firstName, $lastName, $birthDate, $married);
+        $result = $patientDatabase->updatePatient($id, $firstName, $lastName, $birthDate, $married);
         header('Location: view.php');
       }
       else{

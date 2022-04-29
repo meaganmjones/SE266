@@ -1,26 +1,53 @@
 <?php
   
   // This code runs everytime the page loads
-  include __DIR__ . '/model/model_patient.php';
+  include __DIR__ . '/model/searcher.php';
   include __DIR__ . '/include/function.php';
 
-  $id = filter_input(INPUT_POST, 'id');
-  $action = filter_input(INPUT_POST, 'action');
-  $firstName = "";
-  $lastName = "";
-  $birthDate = "";
-  $married = "";
-  $row = "";
-  
+  $configFile = __DIR__ . '/model/dbconfig.ini';
+  try 
+  {
+      $patientDatabase = new Patients($configFile);
+  } 
+  catch ( Exception $error ) 
+  {
+      echo "<h2>" . $error->getMessage() . "</h2>";
+  }  
 
-  if (isPostRequest($_POST, ['submit'])) {
-    $id = filter_input(INPUT_POST, 'id');
+  if(isset($_GET['action'])){
+    $action = filter_input(INPUT_GET, 'action');
+    $id = filter_input(INPUT_GET, 'id');
+    if($action == "update"){
+      $row = $patientDatabase->getOnePatient($id);
+      //$id = $row['id'];
+      $firstName = $row['patientFirstName'];
+      $lastName = $row['patientLastName'];
+      $birthDate = $row['patientBirthDate'];
+      $married = $row['patientMarried'];
+    }else{
+        
+      $firstName = '';
+      $lastName = '';
+      $birthDate = '';
+      $married = '';
+  }   
+  }elseif(isset($_POST['action'])){
     $action = filter_input(INPUT_POST, 'action');
+    $id = filter_input(INPUT_POST, 'id');
     $firstName = filter_input(INPUT_POST, 'first');
     $lastName = filter_input(INPUT_POST, 'last');
-    $birthdate = filter_input(INPUT_POST, 'birth');
+    $birthDate = filter_input(INPUT_POST, 'birthDate');
     $married = filter_input(INPUT_POST, 'married');
-    $result = addPatient($firstName, $lastName, $birthdate, $married);
+
+    if($action == 'add'){
+      $result = $patientDatabase->addPatient($firstName, $lastName, $birthDate, $married);
+    }elseif($action == 'update'){
+      $result = $patientDatabase->updatePatient($id, $firstName, $lastName, $birthDate, $married);
+    }
+    header('Location: view.php');
+  }
+  else{
+    header('Location: view.php');
   }
 
 ?>
@@ -45,7 +72,7 @@
 
   <!--Section for the first name -->
   <form class="form-horizontal" action="" method="get">
-  <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the ID data (if there is any) -->
+  <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the action data (if there is any) -->
   <input type='text' id='patientId' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
     <div class="form-group">
       <label class="control-label col-sm-2" for="first name">First Name: </label>

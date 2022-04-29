@@ -1,7 +1,27 @@
 <?php
     include __DIR__ . '/model/model_patient.php';
+    include __DIR__ . '/model/searcher.php';
     include __DIR__ . '/include/function.php';
-    if(0 == 0){
+
+//         // Load helper functions (which also starts the session) then check if user is logged in
+//     include_once __DIR__ . '/include/functions.php'; 
+//     if (!isUserLoggedIn())
+//     {
+//         header ('Location: login.php');
+//     }
+
+//    include_once __DIR__ . '/model/TeamSearcher.php';
+    
+    $configFile = __DIR__ . '/model/dbconfig.ini';
+    try 
+    {
+        $patientDatabase = new PatientSearcher($configFile);
+    } 
+    catch ( Exception $error ) 
+    {
+        echo "<h2>" . $error->getMessage() . "</h2>";
+    }   
+
 
     //need this to search/delete stuff
     $patients = [];
@@ -24,24 +44,20 @@
                 $birthDate = $_POST['fieldValue'];
             }
             
-            $patients = searchPatients($firstName, $lastName, $married, $birthDate);
+            $patients = $patientDatabase->searchPatient($firstName, $lastName, $married, $birthDate);
 
         }else{
             //grab the id so it knows exactly which patient to get rid of
             $id = filter_input(INPUT_POST, 'patientId');
-            deletePatient($id);
-            $patients = getPatients();
+            $patientDatabase->deletePatient($id);
+            $patients = $patientDatabase->getPatients();
         }
     }else{
-        $patients = getPatients();
+        $patients = $patientDatabase->getPatients();
     }
-          
-    
-
-}
 
     //get the info from the DB
-    $patients = getPatients();
+    $patients = $patientDatabase->getPatients();
 ?>
     
 <html lang="en">
@@ -102,11 +118,11 @@
                 <td><?php echo $row['patientBirthDate']; ?></td> 
                 <?php 
                     //$bday = $row['patientBirthDate'];
-                    $age = getAge($row['patientBirthDate']);
+                    $age = $patientDatabase->getAge($row['patientBirthDate']);
                 ?> 
                 <td><?php echo $age; ?></td>          
                 <td><?php echo $row['patientMarried']; ?></td>
-                <td><p><a href="patient_add.php?action=update&id=<?php echo $row['id']; ?>">update</a></p></td>
+                <td><p><a href="edit.php?action=update&id=<?php echo $row['id']; ?>">update</a></p></td>
             
             </tr>
         <?php endforeach; ?>

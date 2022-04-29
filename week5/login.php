@@ -1,6 +1,6 @@
 <?php 
   include __DIR__ . '/include/function.php';
-  include __DIR__ . '/model/model_patient.php';
+  include __DIR__ . '/model/users.php';
 session_start();
 
 if(isPostRequest()){
@@ -9,7 +9,7 @@ if(isPostRequest()){
     $_SESSION['username'] = NULL;
 }
 
-echo sha1('suck my balls');
+
 ?>
 
 <!DOCTYPE html>
