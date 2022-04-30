@@ -17,6 +17,7 @@ if(isPostRequest()){
     }catch(Exception $error){
       echo "<h2>" . $error->getMessage() . "</h2>";
     }
+    
    
     if($userDatabase->validateCredentials($userName, $password)){
       $_SESSION['isLoggedIn'] = true;
@@ -43,6 +44,7 @@ if(isPostRequest()){
 </head>
 <body>
     <h1>LOGIN</h1>
+    <p>Dont have an account? <a href='adduser.php'>Create</a> a new one</p>
     <form method="post" action="login.php">
     <div class="form-group">
       <label class="control-label col-sm-2" for="username">Username: </label>

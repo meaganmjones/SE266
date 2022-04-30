@@ -36,10 +36,10 @@ class Users{
 
         $salt = random_bytes(32);
 
-        $query = $userTable->prepare("INSERT INTO users SET userName = :user, userPassword = :pwd, userSalt = :salt");
+        $query = $userTable->prepare("INSERT INTO user SET userName = :user, userPassword = :pwd, userSalt = :salt");
 
         $binds = array(':user' => $user,
-        ':password' => sha1($salt . $password),
+        ':pwd' => sha1($salt . $password),
         ':salt' => $salt);
 
         $results = ($query->execute($binds) && $query->rowCount() > 0);
@@ -69,7 +69,7 @@ class Users{
         $isValidUser = false;
         $userTable = $this->userData;
 
-        $query = $userTable->prepare("SELECT userPassword, userSalt FROM users WHERE userName = :userName");
+        $query = $userTable->prepare("SELECT userPassword, userSalt FROM user WHERE userName = :userName");
 
         $query->bindValue(':userName', $userName);
 
