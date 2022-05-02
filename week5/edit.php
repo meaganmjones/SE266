@@ -1,12 +1,29 @@
 <?php
+
+//this file:
+  //requires user login
+  //is a form to fill out to add/update a patient
+  //determines action from URL
+  //will display empty boxes when adding and show patient info when updating
+//####################################################################################
+
+
+     // Load helper functions (which also starts the session) then check if user is logged in
+     include_once __DIR__ . '/include/function.php';
+     if (!isUserLoggedIn())
+     {
+         header ('Location: login.php');
+     }
   
   // This code runs everytime the page loads
   include __DIR__ . '/model/searcher.php';
-  include __DIR__ . '/include/function.php';
 
+  //set up config file and create db
   $configFile = __DIR__ . '/model/dbconfig.ini';
   try 
   {
+    //use config file to create a new instance of the Patients class
+    //store as variable patientDatabase
       $patientDatabase = new Patients($configFile);
   } 
   catch ( Exception $error ) 
@@ -14,37 +31,46 @@
       echo "<h2>" . $error->getMessage() . "</h2>";
   }  
 
+  //find out if action sent from view.php was add/update
   if(isset($_GET['action'])){
-    $action = filter_input(INPUT_GET, 'action');
-    $id = filter_input(INPUT_GET, 'id');
+    $action = filter_input(INPUT_GET, 'action'); //get action from URL
+    $id = filter_input(INPUT_GET, 'id'); //get id from URL
+    //if action is update:
     if($action == "update"){
+      //call on getOnePatient using id passed in
       $row = $patientDatabase->getOnePatient($id);
-      //$id = $row['id'];
       $firstName = $row['patientFirstName'];
       $lastName = $row['patientLastName'];
       $birthDate = $row['patientBirthDate'];
       $married = $row['patientMarried'];
-    }else{
+    }else{ //otherwise set variables in HTML to nothing
         
       $firstName = '';
       $lastName = '';
       $birthDate = '';
       $married = '';
-  }   
-  }elseif(isset($_POST['action'])){
+    }   
+  } //end if GET
+  
+  //if its post :
+  elseif(isset($_POST['action'])){ 
+    // grab info from HTML
     $action = filter_input(INPUT_POST, 'action');
     $id = filter_input(INPUT_POST, 'id');
     $firstName = filter_input(INPUT_POST, 'first');
     $lastName = filter_input(INPUT_POST, 'last');
-    $birthDate = filter_input(INPUT_POST, 'birthDate');
+    $birthDate = filter_input(INPUT_POST, 'birth');
     $married = filter_input(INPUT_POST, 'married');
 
+    //if action is add:
     if($action == 'add'){
+      //run addPatient from Patient class
       $result = $patientDatabase->addPatient($firstName, $lastName, $birthDate, $married);
-    }elseif($action == 'update'){
+    }elseif($action == 'update'){ //if action is update
+      //run updatePatient from Patient class
       $result = $patientDatabase->updatePatient($id, $firstName, $lastName, $birthDate, $married);
     }
-    header('Location: view.php');
+    header('Location: view.php'); //brings user back to view.php
   }
   else{
     header('Location: view.php');
@@ -73,7 +99,7 @@
   <!--Section for the first name -->
   <form class="form-horizontal" action="" method="get">
   <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the action data (if there is any) -->
-  <input type='text' id='patientId' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
+  <input type='text' id='id' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
     <div class="form-group">
       <label class="control-label col-sm-2" for="first name">First Name: </label>
       <div class="col-sm-10">

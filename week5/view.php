@@ -1,16 +1,31 @@
 <?php
+
+//this file :
+    //displays a list of all patients in the db
+    //allows user to search for a patient by first/last name and marital status
+    //has links to edit.php for user to add/update a patient
+    //displays delete button next to each patient and will delete that row from the db
+    //has a sort funtion to sort the patients
+//###############################################################################################
+
+
     // Load helper functions (which also starts the session) then check if user is logged in
     include_once __DIR__ . '/include/function.php'; 
+    //if user is not logged in
     if (!isUserLoggedIn())
     {
+        //redirect to the login page
         header ('Location: login.php');
     }
-
-   include_once __DIR__ . '/model/Searcher.php';
     
+    include_once __DIR__ . '/model/Searcher.php';
+
+
+   //set config file 
     $configFile = __DIR__ . '/model/dbconfig.ini';
     try 
     {
+        //create database
         $patientDatabase = new PatientSearcher($configFile);
     } 
     catch ( Exception $error ) 
@@ -22,22 +37,26 @@
     //need this to search/delete stuff
     $patients = [];
     if(isPostRequest()){
-        if (isset($_POST['Search'])) {
+        if (isset($_POST['Search'])) 
+        {
+            //initaliaze variables in html
             $firstName = '';
             $lastName = '';
             $married = '';
             $birthDate = '';
-            if($_POST['fieldName'] == 'patientFirstName'){
-                // echo 'suck my balls';
+            //if choice is first name
+            if($_POST['fieldName'] == 'firstName'){
+               
                 $firstName = $_POST['fieldValue'];
             }
-            elseif($_POST['fieldName'] == 'patientLastName'){
+            elseif($_POST['fieldName'] == 'lastName'){
                 $lastName = $_POST['fieldValue'];
             }
-            elseif($_POST['fieldName'] == 'patientMarried'){
+            elseif($_POST['fieldName'] == 'married'){
                 $married = $_POST['fieldValue'];
             }
             $patients = $patientDatabase->searchPatient($firstName, $lastName, $married);
+            //var_dump($patients);
         }
     
         else{
@@ -69,7 +88,7 @@
      <div class="col-sm-offset-2 col-sm-10">
      
    <h1>Patients</h1>
-   <p><a href="patient_add.php?action=add">Add Patient</a></p>
+   <p><a href="edit.php?action=add">Add Patient</a></p>
 
         <h2>Search</h2>
                 <form action="#" method="post">
