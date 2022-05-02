@@ -81,9 +81,7 @@
             );
             
             
-            if ($query->execute($binds) && $query->rowCount() > 0) {
-                $results = 'Data Added';
-            }
+            $results = ($query->execute($binds) && $query->rowCount() > 0)
             
             return ($results);
         }
