@@ -30,8 +30,8 @@
         <li>Week 1 - <a href="https://jonesse-266.herokuapp.com/week1/partG/fizzbuzz.php">FizzBuzz</a></li>
         <li>Week 2 - <a href="https://jonesse-266.herokuapp.com/week2/partB/intake_form.php">Intake Form</a></li>
         <li>Week 3 - <a href="https://jonesse-266.herokuapp.com/week3/atm_starter.php">ATM</a></li>
-        <li>Week 4</li>
-        <li>Week 5</li>
+        <li>Week 4 - <a href="https://jonesse-266.herokuapp.com/week4/view.php">Patients part 1</a></li></li>
+        <li>Week 5 - <a href="https://jonesse-266.herokuapp.com/week5/login.php">Patients part 2</a></li></li>
         <li>Week 6</li>
         <li>Week 7</li>
         <li>Week 8</li>
