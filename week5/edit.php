@@ -55,6 +55,7 @@
   //if its post :
   elseif(isset($_POST['action'])){ 
     // grab info from HTML
+    echo 'got herrreee';
     $action = filter_input(INPUT_POST, 'action');
     $id = filter_input(INPUT_POST, 'id');
     $firstName = filter_input(INPUT_POST, 'first');
@@ -97,7 +98,7 @@
 
 
   <!--Section for the first name -->
-  <form class="form-horizontal" action="" method="get">
+  <form class="form-horizontal" action="edit.php" method="post">
   <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the action data (if there is any) -->
   <input type='text' id='id' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
     <div class="form-group">
@@ -119,7 +120,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Birth Date: </label>
       <div class="col-sm-10">          
-        <input type="text" class="form-control" id="birth" placeholder="birth date" name="birth" value=<?php echo $birthDate; ?>>
+        <input type="text" class="form-control" id="birth" placeholder="yyyy-mm-dd" name="birth" value=<?php echo $birthDate; ?>>
       </div>
     </div>
 
@@ -139,10 +140,7 @@
     <!--Section for add/update button -->
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default" value="add"><?php echo $action; ?> Patient</button>
-        <?php
-          //feedback
-        ?>
+        <button type="submit" class="btn btn-default"><?php echo $action; ?> Patient</button>
       </div>
     </div>
   </form>

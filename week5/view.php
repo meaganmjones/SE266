@@ -5,7 +5,7 @@
     //allows user to search for a patient by first/last name and marital status
     //has links to edit.php for user to add/update a patient
     //displays delete button next to each patient and will delete that row from the db
-    //has a sort funtion to sort the patients
+    
 //###############################################################################################
 
 
@@ -86,7 +86,9 @@
 <body>
 <div class="container">
      <div class="col-sm-offset-2 col-sm-10">
-     
+
+     <a href="logoff.php">Logoff</a> <!--logoff button-->
+
    <h1>Patients</h1>
    <p><a href="edit.php?action=add">Add Patient</a></p>
 
@@ -98,8 +100,7 @@
                     <option value="">Select One</option>
                     <option value="firstName">First Name</option>
                     <option value="lastName">Last Name</option>
-                    <!-- <option value="birthDate">BirthDate</option>
-                    <option value="status">Marital Status</option>               -->
+                    <option value="status">Marital Status</option>
                 </select>
        <input type="text" name="fieldValue" />
       <button type="submit" name="Search">Search</button>

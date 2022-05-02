@@ -49,7 +49,6 @@ if(isPostRequest()){
 </head>
 <body>
     <h1>LOGIN</h1>
-    <p>Dont have an account? <a href='adduser.php'>Create</a> a new one</p>
     <form method="post" action="login.php">
     <div class="form-group">
       <label class="control-label col-sm-2" for="username">Username: </label>
@@ -61,7 +60,7 @@ if(isPostRequest()){
     <div class="form-group">
       <label class="control-label col-sm-2" for="password">Password: </label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="password" placeholder="password" name="password">
+        <input type="password" class="form-control" id="password" placeholder="password" name="password">
       </div>
     </div>
 
@@ -71,5 +70,6 @@ if(isPostRequest()){
       </div>
     </div>
     </form>
+
 </body>
 </html>
