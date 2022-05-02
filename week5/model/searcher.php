@@ -3,7 +3,7 @@
 include_once __DIR__ . '/model_patient.php';
 
 class PatientSearcher extends Patients{
-    function searchPatient ($first, $last) 
+    function searchPatient ($first, $last, $married) 
     {
         $results = [];             
         $binds = [];               
@@ -11,7 +11,7 @@ class PatientSearcher extends Patients{
 
 
         $query =  "SELECT * FROM  patients   ";
-        $isFirstClause = true;
+$isFirstClause = true;
         
         if ($first != "") {
             if ($isFirstClause)

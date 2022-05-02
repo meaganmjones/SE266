@@ -1,16 +1,12 @@
 <?php
-    include __DIR__ . '/model/model_patient.php';
-    include __DIR__ . '/model/searcher.php';
-    include __DIR__ . '/include/function.php';
+    // Load helper functions (which also starts the session) then check if user is logged in
+    include_once __DIR__ . '/include/function.php'; 
+    if (!isUserLoggedIn())
+    {
+        header ('Location: login.php');
+    }
 
-//         // Load helper functions (which also starts the session) then check if user is logged in
-//     include_once __DIR__ . '/include/functions.php'; 
-//     if (!isUserLoggedIn())
-//     {
-//         header ('Location: login.php');
-//     }
-
-//    include_once __DIR__ . '/model/TeamSearcher.php';
+   include_once __DIR__ . '/model/Searcher.php';
     
     $configFile = __DIR__ . '/model/dbconfig.ini';
     try 
@@ -31,33 +27,32 @@
             $lastName = '';
             $married = '';
             $birthDate = '';
-            if($_POST['fieldName'] == 'firstName'){
+            if($_POST['fieldName'] == 'patientFirstName'){
                 // echo 'suck my balls';
                 $firstName = $_POST['fieldValue'];
             }
-            elseif($_POST['fieldName'] == 'lastName'){
+            elseif($_POST['fieldName'] == 'patientLastName'){
                 $lastName = $_POST['fieldValue'];
             }
-            elseif($_POST['fieldName'] == 'status'){
+            elseif($_POST['fieldName'] == 'patientMarried'){
                 $married = $_POST['fieldValue'];
-            }else{
-                $birthDate = $_POST['fieldValue'];
             }
-            
-            $patients = $patientDatabase->searchPatient($firstName, $lastName, $married, $birthDate);
-
-        }else{
+            $patients = $patientDatabase->searchPatient($firstName, $lastName, $married);
+        }
+    
+        else{
             //grab the id so it knows exactly which patient to get rid of
             $id = filter_input(INPUT_POST, 'patientId');
             $patientDatabase->deletePatient($id);
             $patients = $patientDatabase->getPatients();
         }
-    }else{
+    }
+    else{
         $patients = $patientDatabase->getPatients();
     }
 
     //get the info from the DB
-    $patients = $patientDatabase->getPatients();
+    
 ?>
     
 <html lang="en">
@@ -75,7 +70,22 @@
      
    <h1>Patients</h1>
    <p><a href="patient_add.php?action=add">Add Patient</a></p>
-   <table class="table table-striped">
+
+        <h2>Search</h2>
+                <form action="#" method="post">
+                    <input type="hidden" name="action" value="search" />
+                    <label>Search by Field:</label>
+                <select name="fieldName">
+                    <option value="">Select One</option>
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <!-- <option value="birthDate">BirthDate</option>
+                    <option value="status">Marital Status</option>               -->
+                </select>
+       <input type="text" name="fieldValue" />
+      <button type="submit" name="Search">Search</button>
+      
+      <table class="table table-striped">
         <thead>
             <tr>
                 <th></th>
@@ -88,21 +98,6 @@
             </tr>
         </thead>
         <tbody>
-        <h2>Search</h2>
-                <form action="#" method="post">
-                    <input type="hidden" name="action" value="search" />
-                    <label>Search by Field:</label>
-                <select name="fieldName">
-                    <option value="">Select One</option>
-                    <option value="firstName">First Name</option>
-                    <option value="lastName">Last Name</option>
-                    <option value="birthDate">BirthDate</option>
-                    <option value="status">Marital Status</option>              
-                </select>
-       <input type="text" name="fieldValue" />
-      <button type="submit" name="Search">Search</button>
-      
-      
          <?php foreach ($patients as $row): //loop through the patients in the DB and display one by one?>
             <tr>
                 <td>

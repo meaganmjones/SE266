@@ -3,14 +3,17 @@
   include __DIR__ . '/model/users.php';
   //include __DIR__ . '/include/header.php';
 
+  //currently user not logged in
+  session_start();
   $_SESSION['isLoggedIn'] = false;
 
   $message = "";
-
+//if its a post request:
 if(isPostRequest()){
+  //grab what user typed
     $userName = filter_input(INPUT_POST, 'username');
     $password = filter_input(INPUT_POST, 'password');
-
+    //set up config file
     $configFile = __DIR__ . '/model/dbconfig.ini';
     try{
       $userDatabase = new Users($configFile);
@@ -18,7 +21,7 @@ if(isPostRequest()){
       echo "<h2>" . $error->getMessage() . "</h2>";
     }
     
-   
+   //check for valid creds
     if($userDatabase->validateCredentials($userName, $password)){
       $_SESSION['isLoggedIn'] = true;
 
