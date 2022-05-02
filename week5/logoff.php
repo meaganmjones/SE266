@@ -1,4 +1,7 @@
 <?php
+//this file is used for logging off
+//########################################
+
     session_start();
     // remove all session variables
     session_unset();

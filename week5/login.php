@@ -1,6 +1,7 @@
 <?php 
 //this file allows the user to login
 //will redirect to view.php if login successful
+//#######################################################
   include __DIR__ . '/include/function.php';
   include __DIR__ . '/model/users.php';
 
