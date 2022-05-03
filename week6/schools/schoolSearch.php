@@ -23,12 +23,10 @@
 
 
     }
-
-    //include_once __DIR__ . "/include/header.php";
 ?>
 
     <h2>Search Schools</h2>
-    <form method="post" action="search.php">
+    <form method="post" action="schoolSearch.php">
         <div class="rowContainer">
             <div class="col1">School Name:</div>
             <div class="col2"><input type="text" name="schoolName" value="<?php echo $schoolName; ?>"></div> 
@@ -46,18 +44,31 @@
             <div class="col2"><input type="submit" name="search" value="Search" class="btn btn-warning"></div> 
         </div>
     </form>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>School Name</th>
+                <th>City</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
             
-    <?php
-        //*******************************************************************//
-        //************     TODO     *****************************************//
-        //
-        // Display your search results here in a nice pretty table 🙂
-        //
-        //*******************************************************************//
+        <?php foreach ($schools as $row): //loop through the patients in the DB and display one by one?>
+            <tr>
+                <td>
+  </form>      
 
-    ?>
-
-
-    <?php
-        //include_once __DIR__ . "/include/footer.php";
-    ?>
+                    <form action='view.php' method = 'post'>
+                        <input type='hidden' name='schoolId' value=<?php echo $row['id']; ?>>
+                    </form>
+                </td>
+                <td><?php echo $row['schoolName']; ?></td>
+                <td><?php echo $row['schoolCity']; ?></td>
+                <td><?php echo $row['schoolState']; ?></td> 
+            
+            </tr>
+        <?php endforeach; ?>
