@@ -27,7 +27,7 @@ if(isPostRequest()){
     if($userDatabase->validateCredentials($userName, $password)){
       $_SESSION['isLoggedIn'] = true;
 
-      header('Location: view.php');
+      header('Location: schoolUpload.php');
     }else{
       $message = "Incorrect login credentials";
     }

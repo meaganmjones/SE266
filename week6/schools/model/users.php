@@ -16,8 +16,12 @@ class Users{
     const PASSWORD_SALT = 'school-salt';
 
     //create constructor using config file
+
+    //this is part is not functioning
+    //I get exception message in else statement
     public function __construct($configFile){
-        if($ini = parse_ini_file($configFile)){
+        var_dump($configFile); //this returns string(60) "C:\xampp\htdocs\se266\SE266\week6\schools/model/dbconfig.ini"
+        if($ini = parse_ini_file($configFile)){ //this does not return true ?
             //create PDO obj 
             $userPDO = new PDO( "mysql:host=" . $ini['servername'] . 
             ";port=" . $ini['port'] . 
