@@ -20,7 +20,7 @@
         $path = getcwd(). DIRECTORY_SEPARATOR. 'upload';
         $new_name = $path . DIRECTORY_SEPARATOR . $_FILES['fileToUpload']['name'];
 
-        move_uploaded_file($temp_name, $new_name);
+        $file = move_uploaded_file($temp_name, $new_name);
         //echo 'success';
 
 
@@ -29,13 +29,13 @@
             exit;
         }
         
-        $file = fopen('upload/schools.csv', 'rb');
+        //$file = fopen('upload/schools.csv', 'rb');
         //var_dump($file);
         //$file = 'upload/schools.csv';
         //$schools = fgetcsv($file);
-        $getschool = $schoolDatabase->insertSchoolsFromFile(fgetcsv($file));
+        $getschool = $schoolDatabase->insertSchoolsFromFile($file);
         //$i = 0;
-
+        var_dump($getschool);
 
         // while(!feof($file) && $i<10){
         //     $school =  $schoolDatabase->insertSchoolsFromFile($file);
