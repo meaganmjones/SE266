@@ -6,6 +6,14 @@
     $schoolName = "";
     $city = "";
     $state = "";
+    $configFile = __DIR__ . '/model/dbconfig.ini';
+    try{
+        $schoolDatabase = new Schools($configFile);
+    }catch(Exception $error){
+        echo "<h2>" . $error->getMessage() . "</h2>";
+    }
+    $schools = [];
+
 
     if (isPostRequest()) 
     {
@@ -20,7 +28,13 @@
         //
         //*******************************************************************//
 
+        
+        $schoolName = filter_input(INPUT_POST, 'schoolName');
+        $city = filter_input(INPUT_POST, 'city');
+        $state = filter_input(INPUT_POST, 'state');
 
+        $row = $schoolDatabase->getSchoolCount();
+        $schools = $schoolDatabase->getSelectedSchools($schoolName, $city, $state); 
 
     }
 ?>
@@ -57,7 +71,7 @@
         </thead>
         <tbody>
             
-        <?php foreach ($schools as $row): //loop through the patients in the DB and display one by one?>
+        <!-- <?php //foreach ($schools as $row): //loop through the patients in the DB and display one by one?>
             <tr>
                 <td>
   </form>      
@@ -71,4 +85,6 @@
                 <td><?php echo $row['schoolState']; ?></td> 
             
             </tr>
-        <?php endforeach; ?>
+        <?php //endforeach; ?> -->
+
+        <?php var_dump( $schools ); ?>
