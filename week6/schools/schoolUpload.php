@@ -29,10 +29,8 @@
             exit;
         }
         
-        //$file = fopen('upload/schools.csv', 'rb');
-        //var_dump($file);
-        //$file = 'upload/schools.csv';
-        //$schools = fgetcsv($file);
+        $file = fopen('upload/schools.csv', 'rb');
+
         $getschool = $schoolDatabase->insertSchoolsFromFile($file);
         //$i = 0;
         var_dump($getschool);
