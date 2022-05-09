@@ -61,10 +61,11 @@ class Schools
         $insertSucessful = false;           // file records are not added at this point
         $schoolTable = $this->schoolData;   // Alias for database PDO
         $schoolCounter = 0;                 // Counter for rows read from file
-       
+        
         // We only proceed if the file exists
         if (file_exists($fileName))
-        {
+        {   
+            echo 'got here';
             // Clear current records in table so there are no duplicates
             $this->deleteAllSchools();
 
@@ -95,6 +96,7 @@ class Schools
                 {
                     // Add the school to the database
                    $schoolTable->query("INSERT INTO schools (schoolName, schoolCity, schoolState) VALUES ". $schoolToInsert);
+                   $insertSucessful = true;
                 }
             }
  

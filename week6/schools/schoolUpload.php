@@ -16,7 +16,7 @@
         // upload the file to "upload" directory and then call insertSchoolsFromFile 
         //      *** Make sure that the upload directory is writeable!
 
-        $temp_name = $_FILES['fileToUpload']['tmp_name']; //not sure whats supposed to go in 2nd brackets
+        $temp_name = $_FILES['fileToUpload']['tmp_name']; 
         $path = getcwd(). DIRECTORY_SEPARATOR. 'upload';
         $new_name = $path . DIRECTORY_SEPARATOR . $_FILES['fileToUpload']['name'];
 
@@ -26,14 +26,13 @@
 
         if(!file_exists("upload/schools.csv")){
             echo 'File does not exist';
-            exit;
+            //exit;
+        }else{
+            $insertFile = fopen('upload/schools.csv', 'rb');
+            $insertSchool = $schoolDatabase->insertSchoolsFromFile($insertFile);
         }
-        
-        $file = fopen('upload/schools.csv', 'rb');
-
-        $getschool = $schoolDatabase->insertSchoolsFromFile($file);
         //$i = 0;
-        var_dump($getschool);
+        
 
         // while(!feof($file) && $i<10){
         //     $school =  $schoolDatabase->insertSchoolsFromFile($file);
