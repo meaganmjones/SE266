@@ -2,6 +2,11 @@
    include_once __DIR__ . "/model/Schools.php";
    include_once __DIR__ . "/include/function.php";
       
+   if (!isUserLoggedIn())
+   {
+       //redirect to the login page
+       header ('Location: login.php');
+   }
 
    $configFile = __DIR__ . '/model/dbconfig.ini';
    try{
@@ -33,10 +38,17 @@
     <p>
         Please specify a file to upload and then be patient as the upload may take a while to process.
     </p>
-<!--CURRENTLY THIS STAYS ON SAME PAGE. switch back to action="schoolSearch.php" after testing!!!!!!!-->
+
     <form action="schoolUpload.php" method="post" enctype="multipart/form-data">
 
         <input type="file" name="fileToUpload">
         <input type="submit" value="Upload">
 
     </form>    
+
+    <?php 
+        if (isset ($_FILES['fileToUpload'])) {
+            echo "File uploaded";
+            header('Location: ./schoolSearch.php');
+        }
+    ?>

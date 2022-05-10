@@ -81,7 +81,7 @@ class Schools
             {
                 // Get a row from the CSV file
                 $row = fgetcsv($schoolFileRef);
-
+                   // echo "joe sux";
                 // Convert any special character in the fields into HTML characters
                 $school = str_replace("'", "''", htmlspecialchars($row[0]));
                 $city = str_replace("'", "''", htmlspecialchars($row[1]));

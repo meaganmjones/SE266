@@ -17,16 +17,6 @@
 
     if (isPostRequest()) 
     {
-        //*******************************************************************//
-        //************     TODO     *****************************************//
-        //
-        // Create an object to represent the schools table in the database 
-        //
-        //  Add your search logic here. 
-        // 
-        // Call getSchools with the appropriate arguments
-        //
-        //*******************************************************************//
 
         
         $schoolName = filter_input(INPUT_POST, 'schoolName');
@@ -71,7 +61,7 @@
         </thead>
         <tbody>
             
-        <!-- <?php //foreach ($schools as $row): //loop through the patients in the DB and display one by one?>
+        <?php foreach ($schools as $row): //loop through the patients in the DB and display one by one?>
             <tr>
                 <td>
   </form>      
@@ -85,6 +75,4 @@
                 <td><?php echo $row['schoolState']; ?></td> 
             
             </tr>
-        <?php //endforeach; ?> -->
-
-        <?php var_dump( $schools ); ?>
+        <?php endforeach; ?>
