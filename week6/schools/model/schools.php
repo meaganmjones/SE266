@@ -81,7 +81,7 @@ class Schools
             {
                 // Get a row from the CSV file
                 $row = fgetcsv($schoolFileRef);
-
+                   // echo "joe sux";
                 // Convert any special character in the fields into HTML characters
                 $school = str_replace("'", "''", htmlspecialchars($row[0]));
                 $city = str_replace("'", "''", htmlspecialchars($row[1]));
@@ -96,7 +96,7 @@ class Schools
                 {
                     // Add the school to the database
                    $schoolTable->query("INSERT INTO schools (schoolName, schoolCity, schoolState) VALUES ". $schoolToInsert);
-                   $insertSucessful = true;
+                  // $insertSucessful = true;
                 }
             }
  
