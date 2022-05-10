@@ -19,8 +19,6 @@
 
     if (isset ($_FILES['fileToUpload'])) 
     {
-        // upload the file to "upload" directory and then call insertSchoolsFromFile 
-        //      *** Make sure that the upload directory is writeable!
 
         $path = getcwd(). DIRECTORY_SEPARATOR . UPLOAD_DIRECTORY;
         $tmp_name = $_FILES['fileToUpload']['tmp_name']; 
