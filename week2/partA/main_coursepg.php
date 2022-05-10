@@ -32,7 +32,7 @@
         <li>Week 3 - <a href="https://jonesse-266.herokuapp.com/week3/atm_starter.php">ATM</a></li>
         <li>Week 4 - <a href="https://jonesse-266.herokuapp.com/week4/view.php">Patients part 1</a></li>
         <li>Week 5 - <a href="https://jonesse-266.herokuapp.com/week5/login.php">Patients part 2</a></li>
-        <li>Week 6 - <a href="https://jonesse-266.herokuapp.com/week6/schools/login.php">Patients part 2</a></li>
+        <li>Week 6 - <a href="https://jonesse-266.herokuapp.com/week6/schools/login.php">Schools Upload</a></li>
         <li>Week 7</li>
         <li>Week 8</li>
         <li>Week 9</li>
