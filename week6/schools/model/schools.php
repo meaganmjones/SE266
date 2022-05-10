@@ -96,7 +96,7 @@ class Schools
                 {
                     // Add the school to the database
                    $schoolTable->query("INSERT INTO schools (schoolName, schoolCity, schoolState) VALUES ". $schoolToInsert);
-                   $insertSucessful = true;
+                  // $insertSucessful = true;
                 }
             }
  
