@@ -10,6 +10,7 @@
        echo "<h2>" . $error->getMessage() . "</h2>";
    }
 
+   define("UPLOAD_DIRECTORY", "upload");
 
     if (isset ($_FILES['fileToUpload'])) 
     {
@@ -18,9 +19,9 @@
 
         $temp_name = $_FILES['fileToUpload']['tmp_name']; 
         $path = getcwd(). DIRECTORY_SEPARATOR. 'upload';
-        $new_name = $path . DIRECTORY_SEPARATOR . $_FILES['fileToUpload']['name'];
+        $target_file = $path . DIRECTORY_SEPARATOR . $_FILES['fileToUpload']['name'];
 
-        $file = move_uploaded_file($temp_name, $new_name);
+        $file = move_uploaded_file($temp_name, $target_file);
         //echo 'success';
 
 
@@ -28,17 +29,11 @@
             echo 'File does not exist';
             //exit;
         }else{
-            $insertFile = fopen('upload/schools.csv', 'rb');
-            $insertSchool = $schoolDatabase->insertSchoolsFromFile($insertFile);
+            //$insertFile = fopen('upload/schools.csv', 'rb');
+            $insertSchool = $schoolDatabase->insertSchoolsFromFile($target_file);
+            var_dump($insertSchool);
         }
-        //$i = 0;
-        
 
-        // while(!feof($file) && $i<10){
-        //     $school =  $schoolDatabase->insertSchoolsFromFile($file);
-        //     $i++;
-        //     //echo ($school[1]) . "<br />";
-        // }
     }
 
 ?>  
