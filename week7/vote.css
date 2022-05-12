@@ -1,0 +1,18 @@
+.main{
+    width: 90%;
+    display: flex;
+    background-color: aquamarine;
+    align-items: center;
+}
+
+.char{
+    border: 2px solid black;
+    align-items: center;
+    width: 30%;
+}
+
+.img{
+    background-color: blueviolet;
+    width: 80%;
+    height: 75px;
+}
