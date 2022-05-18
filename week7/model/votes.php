@@ -47,17 +47,6 @@ class Votes{
 
         return $results;
     }
-
-    public function updateVotes($cinderella, $mulan, $snowWhite){
-        $results = false;
-        $voteTable = $this->voteData;
-
-        $query = $voteTable->prepare("UPDATE votes SET cinderella = :cinderella, mulan = :mulan, snowWhite = :snowWhite WHERE id = :id");
-
-        $binds = array(":cinderella" => $cinderella,
-                        ":mulan" => $mulan,
-                        ":snowWhite" => $snowWhite);
-    }
 }
 
 
