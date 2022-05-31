@@ -1,16 +1,16 @@
 <?php
-    //this file is for the Patients class and contains the following functions:
-        //getPatients - gets all patients from db
-        //getOnePatient - gets one patient from db
-        //addPatient - adds a new patient to the db
-        //updatePatient - updates an existing patient in the db
-        //deletePatient - deletes a patient from the db
-        //getDatabaseRef - returns patientData variable
+    //this file is for the Tickets class and contains the following functions:
+        //getTickets - gets all tickets from db
+        //getOneTicket - gets one ticket from db
+        //addTicket - adds a new ticket to the db
+        //updateTicket - updates an existing ticket in the db
+        //deleteTicket - deletes a ticket from the db
+        //getDatabaseRef - returns ticketData variable
     //######################################################################################
 
-    class Patients{
+    class Tickets{
 
-        private $patientData;
+        private $ticketData;
 
     //class constructor
     public function __construct($configFile){
@@ -25,24 +25,24 @@
             $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //save the PDO obj as patientData
-            $this->patientData = $pdo;
+            //save the PDO obj as ticketData
+            $this->ticketData = $pdo;
         }else{ //otherwise tell user the error message
             throw new Exception("<h2>Creation of database object failed : (</h2>", 0, null);
         }
     }//end construct
 
 
- // Grab all of the patients and their info from the DB
-    public function getPatients() {
+ // Grab all of the tickets and their info from the DB
+    public function getTickets() {
         //global $db;
     
         $results = []; //store in this array
-        $patientTable = $this->patientData;
+        $ticketTable = $this->ticketData;
 
-        $query = $patientTable->prepare("SELECT * FROM patients ORDER BY patientLastName"); 
+        $query = $ticketTable->prepare("SELECT * FROM tickets ORDER BY id"); 
     
-        //This runs the query and snatches our patient info
+        //This runs the query and snatches our ticket info
         if ( $query->execute() && $query->rowCount() > 0 ) {
             $results = $query->fetchAll(PDO::FETCH_ASSOC);
              
@@ -51,13 +51,13 @@
      return ($results);
     }
 
-    //get singular patient
-    public function getOnePatient($id){
+    //get singular ticket
+    public function getOneTicket($id){
         $results = [];  //hold db info here after we fetch it
-        $patientTable = $this->patientData; //save the db PDO as patientTable
+        $ticketTable = $this->ticketData; //save the db PDO as ticketTable
 
         //prepare sql statement
-        $query = $patientTable->prepare("SELECT * FROM patients WHERE id = :id"); //use id to select correct row
+        $query = $ticketTable->prepare("SELECT * FROM tickets WHERE id = :id"); //use id to select correct row
         $query->bindValue(':id', $id); //binds :id from line above to the int passed into function
 
             //if the sql statement gets executed and the returned amount of junk is more than 0:
@@ -70,21 +70,22 @@
        
     }
 
-    //Add a patient
-    public function addPatient($firstName, $lastName, $birthdate, $married) {
+    //Add a ticket
+    public function addTicket($title, $user, $desc, $owner, $status) {
 
         $results = false;  //initalize results as false
-        $patientTable = $this->patientData; //set db PDO as patientTable
+        $ticketTable = $this->ticketData; //set db PDO as ticketTable
 
         //prepare sql statement to insert what was passed in into the db
-        $query = $patientTable->prepare("INSERT INTO patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married");
+        $query = $ticketTable->prepare("INSERT INTO tickets SET title = :title, user = :user, description = :desc, owner = :owner, status = :status");
 
         //create array that binds :fieldName in line above to the variables passed into function
         $binds = array(
-            ":firstName" => $firstName,
-            ":lastName" => $lastName,
-            ":birthDate" => $birthdate,
-            ":married" => $married
+            ":title" => $title,
+            ":user" => $user,
+            ":desc" => $desc,
+            ":owner" => $owner,
+            ":status" => $status
         );
     
         //execute the query using the binds and make sure it returned something
@@ -93,21 +94,22 @@
         return ($results);
     }
 
-    //Update a patient
-    public function updatePatient($id, $firstName, $lastName, $birthdate, $married) {
+    //Update a ticket
+    public function updateTicket($id, $title, $user, $desc, $owner, $status) {
         $results = false; //initialze results to false
-        $patientTable = $this->patientData; //set db PDO as patientTable
+        $ticketTable = $this->ticketData; //set db PDO as ticketTable
 
-        //prepare the sql statement to update a specific patient
-        $query = $patientTable->prepare("UPDATE patients SET patientFirstName = :firstName, patientLastName = :lastName, patientBirthDate = :birthDate, patientMarried = :married WHERE id = :id");
+        //prepare the sql statement to update a specific ticket
+        $query = $ticketTable->prepare("UPDATE tickets SET title= :title, user = :user, description = :desc, owner = :owner, status = :status WHERE id = :id");
 
         //binds :fieldName in line above to the variables passed into function
         $binds = array(
             ":id" => $id,
-            ":firstName" => $firstName,
-            ":lastName" => $lastName,
-            ":birthDate" => $birthdate,
-            ":married" => $married
+            ":title" => $title,
+            ":user" => $user,
+            ":desc" => $desc,
+            ":owner" => $owner,
+            ":status" => $status
         );
         
         //execute query using binds and check that it returned something
@@ -116,13 +118,13 @@
         return ($results);
     }
 
-    //delete patient
-    public function deletePatient($id){
+    //delete ticket
+    public function deleteTicket($id){
         $results = false; //inititalze results to false
-        $patientTable = $this->patientData; //set db PDO as patientTable
+        $ticketTable = $this->ticketData; //set db PDO as ticketTable
 
         //prepare sql statement to delete a specific user
-        $query = $patientTable->prepare("DELETE FROM patients WHERE id = :id");
+        $query = $ticketTable->prepare("DELETE FROM tickets WHERE id = :id");
 
         //bind :id in line above with id passed into the function
         $query->bindValue(':id', $id);
@@ -135,21 +137,12 @@
 
     //allows search class (Searcher.php) to create queries
     public function getDatabaseRef(){
-        return $this->patientData;
-    }
-
-    //calculate the age
-    function getAge($birthday){
-        $now = date("Y-m-d"); //set current date as now
-        // found this on stackoverflow https://stackoverflow.com/questions/3776682/php-calculate-age
-        $age = date_diff(date_create($now), date_create($birthday))->y;
-
-        return ($age);
+        return $this->ticketData;
     }
    
     //deconstruct the db PDO obj
     public function __deconstruct(){
-        $this->patientData = null;
+        $this->ticketData = null;
     }
 
 }

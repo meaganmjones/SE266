@@ -1,8 +1,9 @@
 <?php
 include __DIR__ . '/include/function.php';
 include __DIR__ . '/model/ticket.php';
+include __DIR__ . '/model/user.php';
 
-session start();
+session_start();
 
 $_SESSION['isLoggedIn'] = false;
 
@@ -12,7 +13,7 @@ if(isPostRequest()){
     $userName = filter_input(INPUT_POST, 'username');
     $password = filter_input(INPUT_POST, 'password');
 
-    $configFile = __DIR__ . 'model/dbconfig.ini';
+    $configFile = __DIR__ . '/model/dbconfig.ini';
     try{
         $userDatabase = new Users($configFile);
     }catch(Exception $error){

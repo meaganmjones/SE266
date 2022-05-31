@@ -2,9 +2,9 @@
 
 //this file:
   //requires user login
-  //is a form to fill out to add/update a patient
+  //is a form to fill out to add/update a ticket
   //determines action from URL
-  //will display empty boxes when adding and show patient info when updating
+  //will display empty boxes when adding and show ticket info when updating
 //####################################################################################
 
 
@@ -16,15 +16,15 @@
      }
   
   // This code runs everytime the page loads
-  include __DIR__ . '/model/searcher.php';
+  include __DIR__ . '/model/search.php';
 
   //set up config file and create db
   $configFile = __DIR__ . '/model/dbconfig.ini';
   try 
   {
-    //use config file to create a new instance of the Patients class
-    //store as variable patientDatabase
-      $patientDatabase = new Patients($configFile);
+    //use config file to create a new instance of the tickets class
+    //store as variable ticketDatabase
+      $ticketDatabase = new Tickets($configFile);
   } 
   catch ( Exception $error ) 
   {
@@ -37,18 +37,20 @@
     $id = filter_input(INPUT_GET, 'id'); //get id from URL
     //if action is update:
     if($action == "update"){
-      //call on getOnePatient using id passed in
-      $row = $patientDatabase->getOnePatient($id);
-      $firstName = $row['patientFirstName'];
-      $lastName = $row['patientLastName'];
-      $birthDate = $row['patientBirthDate'];
-      $married = $row['patientMarried'];
+      //call on getOneTicket using id passed in
+      $row = $ticketDatabase->getOneTicket($id);
+      $title = $row['title'];
+      $user = $row['user'];
+      $desc = $row['description'];
+      $owner = $row['owner'];
+      $status = $row['status'];
     }else{ //otherwise set variables in HTML to nothing
         
-      $firstName = '';
-      $lastName = '';
-      $birthDate = '';
-      $married = '';
+      $title = '';
+      $user = '';
+      $desc = '';
+      $owner = '';
+      $status = '';
     }   
   } //end if GET
   
@@ -58,18 +60,19 @@
     echo 'got herrreee';
     $action = filter_input(INPUT_POST, 'action');
     $id = filter_input(INPUT_POST, 'id');
-    $firstName = filter_input(INPUT_POST, 'first');
-    $lastName = filter_input(INPUT_POST, 'last');
-    $birthDate = filter_input(INPUT_POST, 'birth');
-    $married = filter_input(INPUT_POST, 'married');
+    $title = filter_input(INPUT_POST, 'title');
+    $user = filter_input(INPUT_POST, 'user');
+    $desc = filter_input(INPUT_POST, 'description');
+    $owner = filter_input(INPUT_POST, 'owner');
+    $status = filter_input(INPUT_POST, 'status');
 
     //if action is add:
     if($action == 'add'){
-      //run addPatient from Patient class
-      $result = $patientDatabase->addPatient($firstName, $lastName, $birthDate, $married);
+      //run addTicket from Tickets class
+      $result = $ticketDatabase->addTicket($title, $user, $description, $owner, $status);
     }elseif($action == 'update'){ //if action is update
-      //run updatePatient from Patient class
-      $result = $patientDatabase->updatePatient($id, $firstName, $lastName, $birthDate, $married);
+      //run updateTickets from Tickets class
+      $result = $ticketDatabase->updateTicket($id, $title, $user, $description, $owner, $status);
     }
     header('Location: view.php'); //brings user back to view.php
   }
@@ -82,7 +85,7 @@
 <!-- I stole the following lines from the example gitHub and adjusted as needed -->
 <html lang="en">
 <head>
-  <title>Add Patient</title>
+  <title>Add Ticket</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -92,9 +95,9 @@
 
 <body>
 <div class="container">
-<div class="col-sm-offset-2 col-sm-10"><h3><a href="./view.php">View Patients</a></h3></div>
+<div class="col-sm-offset-2 col-sm-10"><h3><a href="./view.php">View Ticket</a></h3></div>
 
-  <h1>Add Patient</h1>
+  <h1>Add Ticket</h1>
 
 
   <!--Section for the first name -->
@@ -102,37 +105,44 @@
   <input type='text' id='action' name='action' value=<?php echo $action; ?>><!--created as a spot to store the action data (if there is any) -->
   <input type='text' id='id' name='id' value=<?php echo $id; ?>><!--created as a spot to store the ID data (if there is any) -->
     <div class="form-group">
-      <label class="control-label col-sm-2" for="first name">First Name: </label>
+      <label class="control-label col-sm-2" for="title">Title: </label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="first" placeholder="First Name" name="first" value=<?php echo $firstName; ?>>
+        <input type="text" class="form-control" id="title" placeholder="title" name="title" value=<?php echo $title; ?>>
       </div>
     </div>
 
-    <!--Section for last name -->
+    <!--Section for user -->
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Last Name: </label>
+      <label class="control-label col-sm-2" for="user">User: </label>
       <div class="col-sm-10">          
-        <input type="text" class="form-control" id="last" placeholder="Last Name" name="last" value=<?php echo $lastName; ?>>
+        <input type="text" class="form-control" id="user" placeholder="User" name="user" value=<?php echo $user; ?>>
       </div>
     </div>
 
-    <!--Section for birthday -->
+    <!--Section for desc -->
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Birth Date: </label>
+      <label class="control-label col-sm-2" for="desc">Description: </label>
       <div class="col-sm-10">          
-        <input type="text" class="form-control" id="birth" placeholder="yyyy-mm-dd" name="birth" value=<?php echo $birthDate; ?>>
+        <input type="text" class="form-control" id="desc" placeholder="description" name="desc" value=<?php echo $desc; ?>>
+      </div>
+    </div>
+<!--Section for owner-->
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="owner">Assigned to: </label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="owner" placeholder="assigned to" name="desc" value=<?php echo $owner; ?>>
       </div>
     </div>
 
     <!--Section for married data -->
     <!--How do I fill in the radio buttons using the $married variable? The associated values are what gets imported into the DB, so I don't want to change them -->
     <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Marriage Status: </label>
+      <label class="control-label col-sm-2" for="status">Status: </label>
       <div class="col-sm-10">  
-        <input type="radio" id="html" name="married" value=0>
-        <label for="html">No</label><br>
+        <input type="radio" id="html" name="" value=0>
+        <label for="html">Active</label><br>
         <input type="radio" id="css" name="married" value=1>
-        <label for="css">Yes</label><br>
+        <label for="css">Closed</label><br>
       </div>
     </div>
     
@@ -140,7 +150,7 @@
     <!--Section for add/update button -->
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default"><?php echo $action; ?> Patient</button>
+        <button type="submit" class="btn btn-default"><?php echo $action; ?> Ticket</button>
       </div>
     </div>
   </form>
