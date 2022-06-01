@@ -20,9 +20,9 @@
     $tickets = [];
     if(isPostRequest()){
         if(isset($_POST['Search'])){
-            $id = filter_input(INPUT_GET, 'id');
+            $val = filter_input(INPUT_POST, 'fieldValue');
 
-            $ticketDatabase->searchTicket($id);
+            $ticketDatabase->searchTicket($val);
 
             
         }
